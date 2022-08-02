@@ -33,7 +33,8 @@ def get_oil_data():
                        r".4_Retail_Motor_Gasoline_and_On-Highway_Diesel_Fuel_Prices.csv",
                        header=[0],
                        skiprows=[1],
-                       na_values="Not Available")
+                       na_values={"Not Available": np.nan,
+                                  "Not Applicable": np.nan})
 
 
 df_gas_data = get_gas_data()
@@ -211,3 +212,38 @@ fill_electricity_na('Average Retail Price of Electricity, Industrial')
 fill_electricity_na('Average Retail Price of Electricity, Transportation')
 fill_electricity_na('Average Retail Price of Electricity, Total')
 st.dataframe(df_electricity_data_fill_na)
+
+# Copy oil data to start cleaning
+df_oil_data_fill_na = df_oil_data
+# Replacing month strings with dictionary
+df_oil_data_fill_na = df_oil_data_fill_na.replace({'Month': month_dict})
+# Creating datetime index for resample
+df_oil_data_fill_na['Day'] = np.ones((590, 1))
+df_oil_data_fill_na['Day'] = df_oil_data_fill_na['Day'].fillna('1')
+df_oil_data_fill_na['Date'] = pd.to_datetime(df_oil_data_fill_na[['Year', 'Month', 'Day']])
+df_oil_data_fill_na.index = df_oil_data_fill_na['Date']
+df_oil_data_fill_na = pd.DataFrame(df_oil_data_fill_na,
+                                   index=df_oil_data_fill_na['Date'])
+# Converting years from strings to integers for help method
+df_oil_data_fill_na['Year'] = df_oil_data_fill_na['Year'].astype(int)
+print(df_oil_data_fill_na.dtypes)
+
+
+# Helper method to fill using zeros (Not Applicable data)
+# ToDo find a way to replace data values with 0
+# def fill_oil_not_applicable(col, year):
+#     if df_oil_data_fill_na.loc[df_oil_data_fill_na['Year'] > year and df_oil_data_fill_na[col].isnull():
+#         df_oil_data_fill_na = df_oil_data_fill_na[col].insert(0)
+#         return df_oil_data_fill_na
+#     return df_oil_data_fill_na
+
+
+# Helper method to fill using interpolation
+def fill_oil_not_available(col):
+    df_oil_data_fill_na[col] = df_oil_data_fill_na.groupby(['Month'])[col] \
+        .apply(lambda x: x.interpolate(method='time', limit_direction='both'))
+    return df_oil_data_fill_na
+
+
+st.dataframe(df_oil_data_fill_na)
+fill_oil_not_applicable('Unleaded Regular Gasoline, U.S. City Average Retail Price', 1975)
