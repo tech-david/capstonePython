@@ -8,7 +8,7 @@ import numpy as np
 
 @st.cache
 def get_gas_data():
-    return pd.read_csv(r"C:\Users\David's PC\OneDrive - Grand Canyon "
+    return pd.read_csv(r"C:\Users\David\OneDrive - Grand Canyon "
                        r"University\Capstone\Backend\capstonePython\capstonePython\data\Table_9.10_Natural_Gas_Prices"
                        r".csv",
                        header=[0],
@@ -18,7 +18,7 @@ def get_gas_data():
 
 @st.cache
 def get_electricity_data():
-    return pd.read_csv(r"C:\Users\David's PC\OneDrive - Grand Canyon "
+    return pd.read_csv(r"C:\Users\David\OneDrive - Grand Canyon "
                        r"University\Capstone\Backend\capstonePython\capstonePython\data\Table_9"
                        r".8_Average_Retail_Prices_of_Electricity.csv",
                        header=[0],
@@ -28,7 +28,7 @@ def get_electricity_data():
 
 @st.cache
 def get_oil_data():
-    return pd.read_csv(r"C:\Users\David's PC\OneDrive - Grand Canyon "
+    return pd.read_csv(r"C:\Users\David\OneDrive - Grand Canyon "
                        r"University\Capstone\Backend\capstonePython\capstonePython\data\Table_9"
                        r".4_Retail_Motor_Gasoline_and_On-Highway_Diesel_Fuel_Prices.csv",
                        header=[0],
@@ -147,26 +147,33 @@ df_gas_data_fill_na['Day'] = np.ones((552, 1))
 df_gas_data_fill_na['Day'] = df_gas_data_fill_na['Day'].fillna('1')
 df_gas_data_fill_na['Date'] = pd.to_datetime(df_gas_data_fill_na[['Year', 'Month', 'Day']])
 df_gas_data_fill_na.index = df_gas_data_fill_na['Date']
-# df_gas_data_fill_na.drop(['Year',
-#                           'Month',
-#                           'Percentage of Residential Sector Consumption for Which Price Data Are Available',
-#                           'Percentage of Commercial Sector Consumption for Which Price Data Are Available',
-#                           'Percentage of Industrial Sector Consumption for Which Price Data Are Available',
-#                           'Percentage of Electric Power Sector Consumption for Which Price Data Are Available',
-#                           'Day'],
-#                          axis=1,
-#                          inplace=True)
+
 df_gas_data_fill_na = pd.DataFrame(df_gas_data_fill_na,
                                    index=df_gas_data_fill_na['Date'])
-# df_gas_data_fill_na['Natural Gas Price, Citygate'].interpolate(method='time',
-#                                                                limit_direction='backward',
-#                                                                inplace=True,
-#                                                                downcast='infer')
+# Dropping columns not related to price (Transportation all NA)
+df_gas_data_fill_na = df_gas_data_fill_na.drop(
+    columns=['Percentage of Residential Sector Consumption for Which Price Data Are Available',
+             'Percentage of Commercial Sector Consumption for Which Price Data Are Available',
+             'Percentage of Electric Power Sector Consumption for Which Price Data Are Available',
+             'Percentage of Industrial Sector Consumption for Which Price Data Are Available',
+             'Natural Gas Transportation Sector Price'])
 
-df_gas_data_fill_na['Natural Gas Price, Delivered to Consumers, Residential'] = \
-    df_gas_data_fill_na.groupby('Month')['Natural Gas Price, Delivered to Consumers, Residential'] \
-        .apply(lambda x: x.interpolate(method='time',
-                                       limit_direction='backward'))
+
+# Helper method to fill NA values using interpolation
+def fill_gas_na(col):
+    df_gas_data_fill_na[col] = df_gas_data_fill_na.groupby(['Month'])[col] \
+        .apply(lambda x: x.interpolate(method='time', limit_direction='both'))
+    return df_gas_data_fill_na
+
+
+# Fill columns
+fill_gas_na('Natural Gas Price, Delivered to Consumers, Residential')
+fill_gas_na('Natural Gas Price, Wellhead')
+fill_gas_na('Natural Gas Price, Citygate')
+fill_gas_na('Natural Gas Price, Delivered to Consumers, Commercial')
+fill_gas_na('Natural Gas Price, Delivered to Consumers, Industrial')
+fill_gas_na('Natural Gas Price, Electric Power Sector')
+
 st.dataframe(df_gas_data_fill_na)
 fig_natural_gas = px.area(df_gas_data_fill_na,
                           x='Year',
