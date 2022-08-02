@@ -47,7 +47,7 @@ df_electricity_data[elec_cols[1:]] = df_electricity_data[elec_cols[1:]].apply(pd
 oil_cols = df_oil_data.columns
 df_oil_data[oil_cols[1:]] = df_oil_data[oil_cols[1:]].apply(pd.to_numeric, errors='coerce')
 
-# Convert Month columnn into Year Month
+# Convert Month column into Year Month
 df_gas_data[['Year', 'Month']] = df_gas_data['Month'].str.split(' ', 1, expand=True)
 move_year_to_first = df_gas_data.pop('Year')
 df_gas_data.insert(0, 'Year', move_year_to_first)
@@ -138,7 +138,7 @@ month_dict = {"January": 1,
               "October": 10,
               "November": 11,
               "December": 12}
-# Interpolation to fill NA values
+# Copy gas data to start cleaning
 df_gas_data_fill_na = df_gas_data
 # Replacing month strings with dictionary
 df_gas_data_fill_na = df_gas_data_fill_na.replace({'Month': month_dict})
@@ -147,7 +147,6 @@ df_gas_data_fill_na['Day'] = np.ones((552, 1))
 df_gas_data_fill_na['Day'] = df_gas_data_fill_na['Day'].fillna('1')
 df_gas_data_fill_na['Date'] = pd.to_datetime(df_gas_data_fill_na[['Year', 'Month', 'Day']])
 df_gas_data_fill_na.index = df_gas_data_fill_na['Date']
-
 df_gas_data_fill_na = pd.DataFrame(df_gas_data_fill_na,
                                    index=df_gas_data_fill_na['Date'])
 # Dropping columns not related to price (Transportation all NA)
@@ -183,3 +182,32 @@ fig_natural_gas = px.area(df_gas_data_fill_na,
                           title='Natural Gas Price, Delivered to Consumers, Residential',
                           labels={'Natural Gas Price, Delivered to Consumers, Residential': '$/1000 cu. ft.'})
 st.plotly_chart(fig_natural_gas)
+
+# Copy electricity data to start cleaning
+df_electricity_data_fill_na = df_electricity_data
+# Replacing month strings with dictionary
+df_electricity_data_fill_na = df_electricity_data_fill_na.replace({'Month': month_dict})
+# Creating datetime index for resample
+df_electricity_data_fill_na['Day'] = np.ones((552, 1))
+df_electricity_data_fill_na['Day'] = df_electricity_data_fill_na['Day'].fillna('1')
+df_electricity_data_fill_na['Date'] = pd.to_datetime(df_electricity_data_fill_na[['Year', 'Month', 'Day']])
+df_electricity_data_fill_na.index = df_electricity_data_fill_na['Date']
+df_electricity_data_fill_na = pd.DataFrame(df_electricity_data_fill_na,
+                                           index=df_electricity_data_fill_na['Date'])
+# Dropping 'Other' Category
+df_electricity_data_fill_na = df_electricity_data_fill_na.drop(columns=['Average Retail Price of Electricity, Other'])
+
+
+# Helper method to fill using interpolation
+def fill_electricity_na(col):
+    df_electricity_data_fill_na[col] = df_electricity_data_fill_na.groupby(['Month'])[col] \
+        .apply(lambda x: x.interpolate(method='time', limit_direction='both'))
+    return df_electricity_data_fill_na
+
+
+fill_electricity_na('Average Retail Price of Electricity, Residential')
+fill_electricity_na('Average Retail Price of Electricity, Commercial')
+fill_electricity_na('Average Retail Price of Electricity, Industrial')
+fill_electricity_na('Average Retail Price of Electricity, Transportation')
+fill_electricity_na('Average Retail Price of Electricity, Total')
+st.dataframe(df_electricity_data_fill_na)
