@@ -22,6 +22,7 @@ st.markdown("> Natural gas, oil products, electricity, housing, CPI of common ho
 st.sidebar.header("Preloaded data exploration")
 
 
+# Using cache to save resources
 @st.cache
 def get_gas_data():
     df_gas_data = pd.read_csv("data/Table_9.10_Natural_Gas_Prices.csv",
@@ -45,7 +46,9 @@ def get_electricity_data():
                                       skiprows=[1],
                                       na_values="Not Available")
     elec_cols = df_electricity_data.columns
+    # Convert prices to float
     df_electricity_data[elec_cols[1:]] = df_electricity_data[elec_cols[1:]].apply(pd.to_numeric, errors='coerce')
+    # Convert Month column into Year Month
     df_electricity_data[['Year', 'Month']] = df_electricity_data['Month'].str.split(' ', 1, expand=True)
     move_year_to_first_elec = df_electricity_data.pop('Year')
     df_electricity_data.insert(0, 'Year', move_year_to_first_elec)
@@ -60,7 +63,9 @@ def get_oil_data():
                               na_values={"Not Available": np.nan,
                                          "Not Applicable": np.nan})
     oil_cols = df_oil_data.columns
+    # Convert prices to float
     df_oil_data[oil_cols[1:]] = df_oil_data[oil_cols[1:]].apply(pd.to_numeric, errors='coerce')
+    # Convert Month column into Year Month
     df_oil_data[['Year', 'Month']] = df_oil_data['Month'].str.split(' ', 1, expand=True)
     move_year_to_first_oil = df_oil_data.pop('Year')
     df_oil_data.insert(0, 'Year', move_year_to_first_oil)
@@ -95,6 +100,7 @@ gas_raw_dataframe()
 def gas_raw_plot():
     df = get_gas_data()
     st.subheader("Natural Gas Price Graph")
+    # Creating columns for view
     col1, col2 = st.columns(2)
     x_axis = col1.selectbox('Select X-axis',
                             options=df.columns)
@@ -132,6 +138,7 @@ def elec_raw_dataframe():
 def elec_raw_plot():
     df = get_electricity_data()
     st.subheader("Electricity Price Graph")
+    # Creating columns for view
     col1, col2 = st.columns(2)
     x_axis = col1.selectbox('Select X-axis',
                             options=df.columns)
@@ -172,6 +179,7 @@ def oil_raw_dataframe():
 def oil_raw_plot():
     df = get_oil_data()
     st.subheader("Oil/Fuel Price Graph")
+    # Creating columns for view
     col1, col2 = st.columns(2)
     x_axis = col1.selectbox('Select X-axis',
                             options=df.columns)
@@ -295,7 +303,7 @@ df_oil_data_fill_na['Year'] = df_oil_data_fill_na['Year'].astype(int)
 print(df_oil_data_fill_na.dtypes)
 
 # Helper method to fill using zeros (Not Applicable data)
-# ToDo find a way to replace data values with 0
+# ToDo find a way to replace not applicable data values with 0
 # def fill_oil_not_applicable(col, year):
 #     if df_oil_data_fill_na.loc[df_oil_data_fill_na['Year'] > year and df_oil_data_fill_na[col].isnull():
 #         df_oil_data_fill_na = df_oil_data_fill_na[col].insert(0)
@@ -313,6 +321,8 @@ print(df_oil_data_fill_na.dtypes)
 # st.dataframe(df_oil_data_fill_na)
 # fill_oil_not_applicable('Unleaded Regular Gasoline, U.S. City Average Retail Price', 1975)
 
+# Creating reports, dropping date and day, as API recreates Date
+# Dropping day as it creates incorrect correlation statistics
 natural_gas_profile = ProfileReport(df_gas_data_fill_na.drop(columns=['Date', 'Day']),
                                     title="Natural Gas Reports",
                                     dataset={
@@ -339,4 +349,5 @@ natural_gas_profile = ProfileReport(df_gas_data_fill_na.drop(columns=['Date', 'D
 
 st.title("Reports of natural gas data after filling NA values")
 st_profile_report(natural_gas_profile)
+# Saving created report to folder
 natural_gas_profile.to_file(path("reports/Natural_Gas_Reports.html"))
