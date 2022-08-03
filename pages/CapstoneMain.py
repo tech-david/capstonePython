@@ -9,12 +9,21 @@ import pandas_profiling
 from streamlit_pandas_profiling import st_profile_report
 from pandas_profiling import ProfileReport
 
+st.set_page_config(page_title="Data Exploration")
+st.title("Economic Recessions Using Commodities")
+st.markdown("Predicting recessions using common consumer commodities")
+st.write(
+    """Preloaded data view.  To come: Uploading own data.
+    """
+)
+
+st.header("Commodities Include:")
+st.markdown("> Natural gas, oil products, electricity, housing, CPI of common household goods.")
+
 
 @st.cache
 def get_gas_data():
-    df_gas_data = pd.read_csv(r"C:\Users\David\OneDrive - Grand Canyon "
-                              r"University\Capstone\Backend\capstonePython\capstonePython\data\Table_9"
-                              r".10_Natural_Gas_Prices.csv",
+    df_gas_data = pd.read_csv("data/Table_9.10_Natural_Gas_Prices.csv",
                               header=[0],
                               skiprows=[1],
                               na_values="Not Available")
@@ -28,45 +37,34 @@ def get_gas_data():
     return df_gas_data
 
 
+@st.cache
 def get_electricity_data():
-    return pd.read_csv(r"C:\Users\David\OneDrive - Grand Canyon "
-                       r"University\Capstone\Backend\capstonePython\capstonePython\data\Table_9"
-                       r".8_Average_Retail_Prices_of_Electricity.csv",
-                       header=[0],
-                       skiprows=[1],
-                       na_values="Not Available")
+    df_electricity_data = pd.read_csv("data/Table_9.8_Average_Retail_Prices_of_Electricity.csv",
+                                      header=[0],
+                                      skiprows=[1],
+                                      na_values="Not Available")
+    elec_cols = df_electricity_data.columns
+    df_electricity_data[elec_cols[1:]] = df_electricity_data[elec_cols[1:]].apply(pd.to_numeric, errors='coerce')
+    df_electricity_data[['Year', 'Month']] = df_electricity_data['Month'].str.split(' ', 1, expand=True)
+    move_year_to_first_elec = df_electricity_data.pop('Year')
+    df_electricity_data.insert(0, 'Year', move_year_to_first_elec)
+    return df_electricity_data
 
 
+@st.cache
 def get_oil_data():
-    return pd.read_csv(r"C:\Users\David\OneDrive - Grand Canyon "
-                       r"University\Capstone\Backend\capstonePython\capstonePython\data\Table_9"
-                       r".4_Retail_Motor_Gasoline_and_On-Highway_Diesel_Fuel_Prices.csv",
-                       header=[0],
-                       skiprows=[1],
-                       na_values={"Not Available": np.nan,
-                                  "Not Applicable": np.nan})
+    df_oil_data = pd.read_csv("data/Table_9.4_Retail_Motor_Gasoline_and_On-Highway_Diesel_Fuel_Prices.csv",
+                              header=[0],
+                              skiprows=[1],
+                              na_values={"Not Available": np.nan,
+                                         "Not Applicable": np.nan})
+    oil_cols = df_oil_data.columns
+    df_oil_data[oil_cols[1:]] = df_oil_data[oil_cols[1:]].apply(pd.to_numeric, errors='coerce')
+    df_oil_data[['Year', 'Month']] = df_oil_data['Month'].str.split(' ', 1, expand=True)
+    move_year_to_first_oil = df_oil_data.pop('Year')
+    df_oil_data.insert(0, 'Year', move_year_to_first_oil)
+    return df_oil_data
 
-
-df_electricity_data = get_electricity_data()
-df_oil_data = get_oil_data()
-
-elec_cols = df_electricity_data.columns
-df_electricity_data[elec_cols[1:]] = df_electricity_data[elec_cols[1:]].apply(pd.to_numeric, errors='coerce')
-oil_cols = df_oil_data.columns
-df_oil_data[oil_cols[1:]] = df_oil_data[oil_cols[1:]].apply(pd.to_numeric, errors='coerce')
-
-df_electricity_data[['Year', 'Month']] = df_electricity_data['Month'].str.split(' ', 1, expand=True)
-move_year_to_first_elec = df_electricity_data.pop('Year')
-df_electricity_data.insert(0, 'Year', move_year_to_first_elec)
-df_oil_data[['Year', 'Month']] = df_oil_data['Month'].str.split(' ', 1, expand=True)
-move_year_to_first_oil = df_oil_data.pop('Year')
-df_oil_data.insert(0, 'Year', move_year_to_first_oil)
-
-st.title("Economic Recessions Using Commodities")
-st.markdown("Predicting recessions using common consumer commodities")
-
-st.header("Commodities Include:")
-st.markdown("> Natural gas, oil products, electricity, housing, CPI of common household goods.")
 
 st.header("Natural Gas Prices Jan 1976 - Dec 2021")
 
