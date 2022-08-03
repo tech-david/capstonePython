@@ -1,22 +1,39 @@
 from datetime import datetime
+from sys import path
 
 import pandas as pd
 import streamlit as st
 import plotly.express as px
 import numpy as np
+import pandas_profiling
+from streamlit_pandas_profiling import st_profile_report
+from pandas_profiling import ProfileReport
 
 
 @st.cache
 def get_gas_data():
-    return pd.read_csv(r"C:\Users\David\OneDrive - Grand Canyon "
-                       r"University\Capstone\Backend\capstonePython\capstonePython\data\Table_9.10_Natural_Gas_Prices"
-                       r".csv",
-                       header=[0],
-                       skiprows=[1],
-                       na_values="Not Available")
+    df_gas_data = pd.read_csv(r"C:\Users\David\OneDrive - Grand Canyon "
+                              r"University\Capstone\Backend\capstonePython\capstonePython\data\Table_9"
+                              r".10_Natural_Gas_Prices.csv",
+                              header=[0],
+                              skiprows=[1],
+                              na_values="Not Available")
+    # Convert prices to float
+    ng_cols = df_gas_data.columns
+    df_gas_data[ng_cols[1:]] = df_gas_data[ng_cols[1:]].apply(pd.to_numeric, errors='coerce')
+    # Convert Month column into Year Month
+    df_gas_data[['Year', 'Month']] = df_gas_data['Month'].str.split(' ', 1, expand=True)
+    move_year_to_first = df_gas_data.pop('Year')
+    df_gas_data.insert(0, 'Year', move_year_to_first)
+    return df_gas_data
+    # return pd.read_csv(r"C:\Users\David\OneDrive - Grand Canyon "
+    #                    r"University\Capstone\Backend\capstonePython\capstonePython\data\Table_9.10_Natural_Gas_Prices"
+    #                    r".csv",
+    #                    header=[0],
+    #                    skiprows=[1],
+    #                    na_values="Not Available")
 
 
-@st.cache
 def get_electricity_data():
     return pd.read_csv(r"C:\Users\David\OneDrive - Grand Canyon "
                        r"University\Capstone\Backend\capstonePython\capstonePython\data\Table_9"
@@ -26,7 +43,6 @@ def get_electricity_data():
                        na_values="Not Available")
 
 
-@st.cache
 def get_oil_data():
     return pd.read_csv(r"C:\Users\David\OneDrive - Grand Canyon "
                        r"University\Capstone\Backend\capstonePython\capstonePython\data\Table_9"
@@ -37,21 +53,16 @@ def get_oil_data():
                                   "Not Applicable": np.nan})
 
 
-df_gas_data = get_gas_data()
+# df_gas_data = get_gas_data()
 df_electricity_data = get_electricity_data()
 df_oil_data = get_oil_data()
-# Convert prices to float
-ng_cols = df_gas_data.columns
-df_gas_data[ng_cols[1:]] = df_gas_data[ng_cols[1:]].apply(pd.to_numeric, errors='coerce')
+
 elec_cols = df_electricity_data.columns
 df_electricity_data[elec_cols[1:]] = df_electricity_data[elec_cols[1:]].apply(pd.to_numeric, errors='coerce')
 oil_cols = df_oil_data.columns
 df_oil_data[oil_cols[1:]] = df_oil_data[oil_cols[1:]].apply(pd.to_numeric, errors='coerce')
 
-# Convert Month column into Year Month
-df_gas_data[['Year', 'Month']] = df_gas_data['Month'].str.split(' ', 1, expand=True)
-move_year_to_first = df_gas_data.pop('Year')
-df_gas_data.insert(0, 'Year', move_year_to_first)
+
 df_electricity_data[['Year', 'Month']] = df_electricity_data['Month'].str.split(' ', 1, expand=True)
 move_year_to_first_elec = df_electricity_data.pop('Year')
 df_electricity_data.insert(0, 'Year', move_year_to_first_elec)
@@ -66,26 +77,35 @@ st.header("Commodities Include:")
 st.markdown("> Natural gas, oil products, electricity, housing, CPI of common household goods.")
 
 st.header("Natural Gas Prices Jan 1976 - Dec 2021")
-st.dataframe(df_gas_data)
 
-# Default columns for natural gas view
-natural_gas_columns = ['Natural Gas Price, Wellhead',
-                       'Natural Gas Price, Citygate',
-                       'Natural Gas Price, Delivered to Consumers, Residential',
-                       'Natural Gas Price, Delivered to Consumers, Commercial',
-                       'Percentage of Electric Power Sector Consumption for Which Price Data Are Available']
-st_ms_natural_gas = st.multiselect("Columns",
-                                   df_gas_data.columns.to_list(),
-                                   natural_gas_columns)
-st.header("Natural gas price graphs")
-fig_natural_gas = px.area(df_gas_data,
+
+def gas_raw_dataframe():
+    df_gas_data = get_gas_data()
+    st.header("Natural gas price graphs")
+    # Default columns for natural gas view
+    natural_gas_columns = ['Natural Gas Price, Wellhead',
+                           'Natural Gas Price, Citygate',
+                           'Natural Gas Price, Delivered to Consumers, Residential',
+                           'Natural Gas Price, Delivered to Consumers, Commercial',
+                           'Percentage of Electric Power Sector Consumption for Which Price Data Are Available']
+    options = df_gas_data.columns.to_list()
+    select_options = st.multiselect("Select Columns to view",
+                                    options,
+                                    natural_gas_columns)
+    filtered_df = st.dataframe(df_gas_data[select_options])
+    return filtered_df
+
+
+gas_raw_dataframe()
+
+fig_natural_gas = px.area(get_gas_data(),
                           x='Year',
                           y='Natural Gas Price, Delivered to Consumers, Residential',
                           line_group='Month',
                           color='Month',
                           title='Natural Gas Price, Delivered to Consumers, Residential',
                           labels={'Natural Gas Price, Delivered to Consumers, Residential': '$/1000 cu. ft.'})
-st.plotly_chart(fig_natural_gas)
+gas_plotly_chart = st.plotly_chart(fig_natural_gas)
 
 st.header("Electricity Prices Jan 1976 - Dec 2021")
 st.dataframe(df_electricity_data)
@@ -228,7 +248,6 @@ df_oil_data_fill_na = pd.DataFrame(df_oil_data_fill_na,
 df_oil_data_fill_na['Year'] = df_oil_data_fill_na['Year'].astype(int)
 print(df_oil_data_fill_na.dtypes)
 
-
 # Helper method to fill using zeros (Not Applicable data)
 # ToDo find a way to replace data values with 0
 # def fill_oil_not_applicable(col, year):
@@ -239,11 +258,39 @@ print(df_oil_data_fill_na.dtypes)
 
 
 # Helper method to fill using interpolation
-def fill_oil_not_available(col):
-    df_oil_data_fill_na[col] = df_oil_data_fill_na.groupby(['Month'])[col] \
-        .apply(lambda x: x.interpolate(method='time', limit_direction='both'))
-    return df_oil_data_fill_na
+# def fill_oil_not_available(col):
+#     df_oil_data_fill_na[col] = df_oil_data_fill_na.groupby(['Month'])[col] \
+#         .apply(lambda x: x.interpolate(method='time', limit_direction='both'))
+#     return df_oil_data_fill_na
+#
+#
+# st.dataframe(df_oil_data_fill_na)
+# fill_oil_not_applicable('Unleaded Regular Gasoline, U.S. City Average Retail Price', 1975)
 
+natural_gas_profile = ProfileReport(df_gas_data_fill_na.drop(columns=['Date', 'Day']),
+                                    title="Natural Gas Reports",
+                                    dataset={
+                                        "description": "Reports of cleaned natural gas dataset"
+                                    },
+                                    variables={
+                                        "descriptions": {
+                                            "Natural Gas Price, Wellhead": "Price from source",
+                                            "Natural Gas Price, Citygate": "Point of distribution",
+                                            "Natural Gas Price, Delivered to Consumers, Residential": "Average price "
+                                                                                                      "paid for by "
+                                                                                                      "residential "
+                                                                                                      "users ",
+                                            "Natural Gas Price, Delivered to Consumers, Commercial": "Average price "
+                                                                                                     "paid for by "
+                                                                                                     "commercial "
+                                                                                                     "users ",
+                                            "Natural Gas Price, Delivered to Consumers, Industrial": "Average price "
+                                                                                                     "paid for by "
+                                                                                                     "industrial "
+                                                                                                     "users ",
+                                        }
+                                    })
 
-st.dataframe(df_oil_data_fill_na)
-fill_oil_not_applicable('Unleaded Regular Gasoline, U.S. City Average Retail Price', 1975)
+st.title("Reports of natural gas data after filling NA values")
+st_profile_report(natural_gas_profile)
+natural_gas_profile.to_file(path("reports/Natural_Gas_Reports.html"))
