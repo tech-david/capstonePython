@@ -27,5 +27,6 @@ st.markdown(
     -- Oil product prices marked as "Not Applicable" will be replaced with 0's rather than interpolation.
     --- This is because not applicable means products were not widely available at time (e.g. unleaded fuel)
     - Option to download reports to local machine
+    - Add dynamic data and graph view to cleaned data
     """
 )
