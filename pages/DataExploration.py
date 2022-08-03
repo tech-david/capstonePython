@@ -142,7 +142,7 @@ def elec_raw_plot():
                    y=y_axis,
                    line_group='Month',
                    color='Month',
-                   title='Natural Gas Raw Plot, Prices in' + '\xa2' + 'per KWh (incl. tax)')
+                   title='Electricity Raw Plot, Prices in' + '\xa2' + 'per KWh (incl. tax)')
     elec_plotly_chart = st.plotly_chart(plot)
     return elec_plotly_chart
 
@@ -182,7 +182,7 @@ def oil_raw_plot():
                    y=y_axis,
                    line_group='Month',
                    color='Month',
-                   title='Natural Gas Raw Plot, Prices in $/gal (incl. tax)')
+                   title='Oil/Fuel Raw Plot, Prices in $/gal (incl. tax)')
     oil_plotly_chart = st.plotly_chart(plot)
     return oil_plotly_chart
 
