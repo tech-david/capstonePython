@@ -73,9 +73,11 @@ st.header("Natural Gas Prices Jan 1976 - Dec 2021")
 
 def gas_raw_dataframe():
     df_gas_data = get_gas_data()
-    st.header("Natural gas price graphs")
+    st.header("Natural gas price data")
     # Default columns for natural gas view
-    natural_gas_columns = ['Natural Gas Price, Wellhead',
+    natural_gas_columns = ['Year',
+                           'Month',
+                           'Natural Gas Price, Wellhead',
                            'Natural Gas Price, Citygate',
                            'Natural Gas Price, Delivered to Consumers, Residential',
                            'Natural Gas Price, Delivered to Consumers, Commercial',
@@ -90,14 +92,35 @@ def gas_raw_dataframe():
 
 gas_raw_dataframe()
 
-fig_natural_gas = px.area(get_gas_data(),
-                          x='Year',
-                          y='Natural Gas Price, Delivered to Consumers, Residential',
-                          line_group='Month',
-                          color='Month',
-                          title='Natural Gas Price, Delivered to Consumers, Residential',
-                          labels={'Natural Gas Price, Delivered to Consumers, Residential': '$/1000 cu. ft.'})
-gas_plotly_chart = st.plotly_chart(fig_natural_gas)
+
+def gas_raw_plot():
+    df = get_gas_data()
+    st.header("Natural gas price graph")
+    col1, col2 = st.columns(2)
+    x_axis = col1.selectbox('Select X-axis',
+                            options=df.columns)
+    y_axis = col2.selectbox('Select Y-axis',
+                            options=df.columns)
+    plot = px.area(df,
+                   x=x_axis,
+                   y=y_axis,
+                   line_group='Month',
+                   color='Month',
+                   title='Natural Gas Raw Plot, Prices in $/1000 cu. ft.')
+    gas_plotly_chart = st.plotly_chart(plot)
+    return gas_plotly_chart
+
+
+gas_raw_plot()
+
+# fig_natural_gas = px.area(get_gas_data(),
+#                           x='Year',
+#                           y='Natural Gas Price, Delivered to Consumers, Residential',
+#                           line_group='Month',
+#                           color='Month',
+#                           title='Natural Gas Price, Delivered to Consumers, Residential',
+#                           labels={'Natural Gas Price, Delivered to Consumers, Residential': '$/1000 cu. ft.'})
+# gas_plotly_chart = st.plotly_chart(fig_natural_gas)
 
 st.header("Electricity Prices Jan 1976 - Dec 2021")
 st.dataframe(df_electricity_data)
