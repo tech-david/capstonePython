@@ -19,6 +19,7 @@ st.write(
 
 st.header("Commodities Include:")
 st.markdown("> Natural gas, oil products, electricity, housing, CPI of common household goods.")
+st.sidebar.header("Preloaded data exploration")
 
 
 @st.cache
@@ -71,7 +72,7 @@ st.header("Natural Gas Prices Jan 1976 - Dec 2021")
 
 def gas_raw_dataframe():
     df_gas_data = get_gas_data()
-    st.header("Natural gas price data")
+    st.subheader("Natural gas price data")
     # Default columns for natural gas view
     natural_gas_columns = ['Year',
                            'Month',
@@ -93,7 +94,7 @@ gas_raw_dataframe()
 
 def gas_raw_plot():
     df = get_gas_data()
-    st.header("Natural gas price graph")
+    st.subheader("Natural gas price graph")
     col1, col2 = st.columns(2)
     x_axis = col1.selectbox('Select X-axis',
                             options=df.columns)
@@ -111,33 +112,44 @@ def gas_raw_plot():
 
 gas_raw_plot()
 
-# fig_natural_gas = px.area(get_gas_data(),
-#                           x='Year',
-#                           y='Natural Gas Price, Delivered to Consumers, Residential',
-#                           line_group='Month',
-#                           color='Month',
-#                           title='Natural Gas Price, Delivered to Consumers, Residential',
-#                           labels={'Natural Gas Price, Delivered to Consumers, Residential': '$/1000 cu. ft.'})
-# gas_plotly_chart = st.plotly_chart(fig_natural_gas)
+
+def elec_raw_dataframe():
+    df_electricity_data = get_electricity_data()
+    st.subheader("Electricity price data")
+    # Default columns for electricity view
+    electricity_columns = ['Year',
+                           'Month',
+                           'Average Retail Price of Electricity, Residential',
+                           'Average Retail Price of Electricity, Commercial']
+    options = df_electricity_data.columns.to_list()
+    select_options = st.multiselect("Select Columns to view",
+                                    options,
+                                    electricity_columns)
+    filtered_df = st.dataframe(df_electricity_data[select_options])
+    return filtered_df
+
+
+def elec_raw_plot():
+    df = get_electricity_data()
+    st.subheader("Electricity price graph")
+    col1, col2 = st.columns(2)
+    x_axis = col1.selectbox('Select X-axis',
+                            options=df.columns)
+    y_axis = col2.selectbox('Select Y-axis',
+                            options=df.columns)
+    plot = px.area(df,
+                   x=x_axis,
+                   y=y_axis,
+                   line_group='Month',
+                   color='Month',
+                   title='Natural Gas Raw Plot, Prices in' + '\xa2' + 'per KWh (incl. tax)')
+    elec_plotly_chart = st.plotly_chart(plot)
+    return elec_plotly_chart
+
 
 st.header("Electricity Prices Jan 1976 - Dec 2021")
-st.dataframe(df_electricity_data)
-
-# Default columns for electricity view
-electricity_columns = ['Average Retail Price of Electricity, Residential',
-                       'Average Retail Price of Electricity, Commercial']
-st_ms_electricity = st.multiselect("Columns",
-                                   df_electricity_data.columns.to_list(),
-                                   electricity_columns)
-st.header("Electricity price graphs")
-fig_electricity = px.area(df_electricity_data,
-                          x='Year',
-                          y='Average Retail Price of Electricity, Residential',
-                          line_group='Month',
-                          color='Month',
-                          title='Average Retail Price of Electricity, Residential',
-                          labels={'Average Retail Price of Electricity, Residential': '\xa2' + ' per KWh (incl. tax)'})
-st.plotly_chart(fig_electricity)
+elec_raw_dataframe()
+elec_raw_plot()
 
 st.header("Oil Product Prices Jan 1976 - Dec 2021")
 st.dataframe(df_oil_data)

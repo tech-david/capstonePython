@@ -6,7 +6,7 @@ st.set_page_config(
 
 st.write("# Economic Recession Using Consumer Commodities")
 
-st.sidebar.header("# Home")
+st.sidebar.header("Home")
 st.markdown(
     """
     Using consumer facing commodities prices to predict recessions using logistical regression.
