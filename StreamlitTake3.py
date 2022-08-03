@@ -26,12 +26,6 @@ def get_gas_data():
     move_year_to_first = df_gas_data.pop('Year')
     df_gas_data.insert(0, 'Year', move_year_to_first)
     return df_gas_data
-    # return pd.read_csv(r"C:\Users\David\OneDrive - Grand Canyon "
-    #                    r"University\Capstone\Backend\capstonePython\capstonePython\data\Table_9.10_Natural_Gas_Prices"
-    #                    r".csv",
-    #                    header=[0],
-    #                    skiprows=[1],
-    #                    na_values="Not Available")
 
 
 def get_electricity_data():
@@ -53,7 +47,6 @@ def get_oil_data():
                                   "Not Applicable": np.nan})
 
 
-# df_gas_data = get_gas_data()
 df_electricity_data = get_electricity_data()
 df_oil_data = get_oil_data()
 
@@ -61,7 +54,6 @@ elec_cols = df_electricity_data.columns
 df_electricity_data[elec_cols[1:]] = df_electricity_data[elec_cols[1:]].apply(pd.to_numeric, errors='coerce')
 oil_cols = df_oil_data.columns
 df_oil_data[oil_cols[1:]] = df_oil_data[oil_cols[1:]].apply(pd.to_numeric, errors='coerce')
-
 
 df_electricity_data[['Year', 'Month']] = df_electricity_data['Month'].str.split(' ', 1, expand=True)
 move_year_to_first_elec = df_electricity_data.pop('Year')
@@ -160,7 +152,7 @@ month_dict = {"January": 1,
               "November": 11,
               "December": 12}
 # Copy gas data to start cleaning
-df_gas_data_fill_na = df_gas_data
+df_gas_data_fill_na = get_gas_data()
 # Replacing month strings with dictionary
 df_gas_data_fill_na = df_gas_data_fill_na.replace({'Month': month_dict})
 # Creating datetime index for resample
