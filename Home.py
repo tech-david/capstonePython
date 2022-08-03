@@ -10,7 +10,7 @@ st.sidebar.header("Home")
 st.markdown(
     """
     Using consumer facing commodities prices to predict recessions using logistical regression.
-    ** About page in sidebar ** to read more info.
+    **'About' page in sidebar** to read more info.
     ## Preloaded data
-    - Navigate to Exploration
+    - Navigate to 'DataExploration'
     """)

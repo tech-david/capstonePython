@@ -14,11 +14,18 @@ st.markdown(
     cleaned data.  In-depth reporting can be seen at the bottom of pages with dataframe info, correlation, min, max,
     etc.
     
+    ## Features
+    Some of the current built-in features include being able to select columns for dataframe view.  As well as being
+    able to select the columns to use as X and Y axes for the graphs.  Suggested use is to use the 'Year' column as the
+    X-axis and the price category as the Y-axis.  The prices are separated by months, the cleaned data uses numbers
+    instead of strings to indicate the month, and are equivalent to each other.
+    
     ## To do
     - Integrate upload functionality to upload own data (must be in csv format).
     - Select options for which data to clean.
     -- Currently using interpolation for existing data, using average annual for months missing.
     -- Oil product prices marked as "Not Applicable" will be replaced with 0's rather than interpolation.
     --- This is because not applicable means products were not widely available at time (e.g. unleaded fuel)
+    - Option to download reports to local machine
     """
 )

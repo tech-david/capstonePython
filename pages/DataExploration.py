@@ -72,19 +72,19 @@ st.header("Natural Gas Prices Jan 1976 - Dec 2021")
 
 def gas_raw_dataframe():
     df_gas_data = get_gas_data()
-    st.subheader("Natural gas price data")
+    st.subheader("Natural Gas Price Data")
     # Default columns for natural gas view
-    natural_gas_columns = ['Year',
-                           'Month',
-                           'Natural Gas Price, Wellhead',
-                           'Natural Gas Price, Citygate',
-                           'Natural Gas Price, Delivered to Consumers, Residential',
-                           'Natural Gas Price, Delivered to Consumers, Commercial',
-                           'Percentage of Electric Power Sector Consumption for Which Price Data Are Available']
+    default_cols = ['Year',
+                    'Month',
+                    'Natural Gas Price, Wellhead',
+                    'Natural Gas Price, Citygate',
+                    'Natural Gas Price, Delivered to Consumers, Residential',
+                    'Natural Gas Price, Delivered to Consumers, Commercial',
+                    'Percentage of Electric Power Sector Consumption for Which Price Data Are Available']
     options = df_gas_data.columns.to_list()
     select_options = st.multiselect("Select Columns to view",
                                     options,
-                                    natural_gas_columns)
+                                    default_cols)
     filtered_df = st.dataframe(df_gas_data[select_options])
     return filtered_df
 
@@ -94,7 +94,7 @@ gas_raw_dataframe()
 
 def gas_raw_plot():
     df = get_gas_data()
-    st.subheader("Natural gas price graph")
+    st.subheader("Natural Gas Price Graph")
     col1, col2 = st.columns(2)
     x_axis = col1.selectbox('Select X-axis',
                             options=df.columns)
@@ -115,23 +115,23 @@ gas_raw_plot()
 
 def elec_raw_dataframe():
     df_electricity_data = get_electricity_data()
-    st.subheader("Electricity price data")
+    st.subheader("Electricity Price Data")
     # Default columns for electricity view
-    electricity_columns = ['Year',
-                           'Month',
-                           'Average Retail Price of Electricity, Residential',
-                           'Average Retail Price of Electricity, Commercial']
+    default_cols = ['Year',
+                    'Month',
+                    'Average Retail Price of Electricity, Residential',
+                    'Average Retail Price of Electricity, Commercial']
     options = df_electricity_data.columns.to_list()
     select_options = st.multiselect("Select Columns to view",
                                     options,
-                                    electricity_columns)
+                                    default_cols)
     filtered_df = st.dataframe(df_electricity_data[select_options])
     return filtered_df
 
 
 def elec_raw_plot():
     df = get_electricity_data()
-    st.subheader("Electricity price graph")
+    st.subheader("Electricity Price Graph")
     col1, col2 = st.columns(2)
     x_axis = col1.selectbox('Select X-axis',
                             options=df.columns)
@@ -151,24 +151,45 @@ st.header("Electricity Prices Jan 1976 - Dec 2021")
 elec_raw_dataframe()
 elec_raw_plot()
 
-st.header("Oil Product Prices Jan 1976 - Dec 2021")
-st.dataframe(df_oil_data)
 
-oil_default_cols = ['Unleaded Regular Gasoline, U.S. City Average Retail Price',
+def oil_raw_dataframe():
+    df_oil_data = get_oil_data()
+    st.subheader("Oil Price Data")
+    # Default columns for oil view
+    default_cols = ['Year',
+                    'Month',
+                    'Unleaded Regular Gasoline, U.S. City Average Retail Price',
                     'Regular Motor Gasoline, All Areas, Retail Price',
                     'On-Highway Diesel Fuel Price']
-st_ms_oil = st.multiselect("Columns",
-                           df_oil_data.columns.to_list(),
-                           oil_default_cols)
-st.header("Fuel price graphs")
-fig_oil = px.area(df_oil_data,
-                  x='Year',
-                  y='Unleaded Regular Gasoline, U.S. City Average Retail Price',
-                  line_group='Month',
-                  color='Month',
-                  title='Unleaded Regular Gasoline, U.S. City Average Retail Price',
-                  labels={'Unleaded Regular Gasoline, U.S. City Average Retail Price': '$/gal (incl. tax)'})
-st.plotly_chart(fig_oil)
+    options = df_oil_data.columns.to_list()
+    select_options = st.multiselect("Select Columns to view",
+                                    options,
+                                    default_cols)
+    filtered_df = st.dataframe(df_oil_data[select_options])
+    return filtered_df
+
+
+def oil_raw_plot():
+    df = get_oil_data()
+    st.subheader("Oil/Fuel Price Graph")
+    col1, col2 = st.columns(2)
+    x_axis = col1.selectbox('Select X-axis',
+                            options=df.columns)
+    y_axis = col2.selectbox('Select Y-axis',
+                            options=df.columns)
+    plot = px.area(df,
+                   x=x_axis,
+                   y=y_axis,
+                   line_group='Month',
+                   color='Month',
+                   title='Natural Gas Raw Plot, Prices in $/gal (incl. tax)')
+    oil_plotly_chart = st.plotly_chart(plot)
+    return oil_plotly_chart
+
+
+st.header("Oil Product Prices Jan 1976 - Dec 2021")
+oil_raw_dataframe()
+oil_raw_plot()
 
 # Data cleaning
 # Dictionary for Month
@@ -230,7 +251,7 @@ fig_natural_gas = px.area(df_gas_data_fill_na,
 st.plotly_chart(fig_natural_gas)
 
 # Copy electricity data to start cleaning
-df_electricity_data_fill_na = df_electricity_data
+df_electricity_data_fill_na = get_electricity_data()
 # Replacing month strings with dictionary
 df_electricity_data_fill_na = df_electricity_data_fill_na.replace({'Month': month_dict})
 # Creating datetime index for resample
@@ -259,7 +280,7 @@ fill_electricity_na('Average Retail Price of Electricity, Total')
 st.dataframe(df_electricity_data_fill_na)
 
 # Copy oil data to start cleaning
-df_oil_data_fill_na = df_oil_data
+df_oil_data_fill_na = get_oil_data()
 # Replacing month strings with dictionary
 df_oil_data_fill_na = df_oil_data_fill_na.replace({'Month': month_dict})
 # Creating datetime index for resample
