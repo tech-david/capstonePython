@@ -9,7 +9,8 @@ import pandas_profiling
 from streamlit_pandas_profiling import st_profile_report
 from pandas_profiling import ProfileReport
 
-st.set_page_config(page_title="Data Exploration")
+st.set_page_config(page_title="Data Exploration",
+                   layout="wide")
 st.title("Economic Recessions Using Commodities")
 st.markdown("Predicting recessions using common consumer commodities")
 st.write(
