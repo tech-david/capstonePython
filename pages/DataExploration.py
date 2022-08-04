@@ -1,11 +1,7 @@
-from datetime import datetime
-from sys import path
-
 import pandas as pd
 import streamlit as st
 import plotly.express as px
 import numpy as np
-import pandas_profiling
 from streamlit_pandas_profiling import st_profile_report
 from pandas_profiling import ProfileReport
 
@@ -301,7 +297,6 @@ df_oil_data_fill_na = pd.DataFrame(df_oil_data_fill_na,
                                    index=df_oil_data_fill_na['Date'])
 # Converting years from strings to integers for help method
 df_oil_data_fill_na['Year'] = df_oil_data_fill_na['Year'].astype(int)
-print(df_oil_data_fill_na.dtypes)
 
 # Helper method to fill using zeros (Not Applicable data)
 # ToDo find a way to replace not applicable data values with 0
@@ -351,4 +346,4 @@ natural_gas_profile = ProfileReport(df_gas_data_fill_na.drop(columns=['Date', 'D
 st.title("Reports of natural gas data after filling NA values")
 st_profile_report(natural_gas_profile)
 # Saving created report to folder
-natural_gas_profile.to_file(path("reports/Natural_Gas_Reports.html"))
+natural_gas_profile.to_file("reports/Natural_Gas_Reports.html")
