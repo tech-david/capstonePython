@@ -272,7 +272,7 @@ post_processed_gas()
 
 def gas_clean_plot():
     df = df_gas_data_fill_na
-    st.subheader("Natural Gas (Clean) Price Graph")
+    st.subheader("Natural Gas (Cleaned) Price Graph")
     # Creating columns for view
     col1, col2 = st.columns(2)
     x_axis = col1.selectbox('Select X-axis',
@@ -342,7 +342,7 @@ post_processed_elec()
 
 def elec_clean_plot():
     df = df_electricity_data_fill_na
-    st.subheader("Electricity (Clean) Price Graph")
+    st.subheader("Electricity (Cleaned) Price Graph")
     # Creating columns for view
     col1, col2 = st.columns(2)
     x_axis = col1.selectbox('Select X-axis',
@@ -375,24 +375,64 @@ df_oil_data_fill_na = pd.DataFrame(df_oil_data_fill_na,
 # Converting years from strings to integers for help method
 df_oil_data_fill_na['Year'] = df_oil_data_fill_na['Year'].astype(int)
 
-# Helper method to fill using zeros (Not Applicable data)
-# ToDo find a way to replace not applicable data values with 0
-# def fill_oil_not_applicable(col, year):
-#     if df_oil_data_fill_na.loc[df_oil_data_fill_na['Year'] > year and df_oil_data_fill_na[col].isnull():
-#         df_oil_data_fill_na = df_oil_data_fill_na[col].insert(0)
-#         return df_oil_data_fill_na
-#     return df_oil_data_fill_na
+# Filling out Leaded Regular Gasoline with 0 after April 1991 (no longer used) and interpolating for NA in 1976
+df_oil_data_fill_na['Leaded Regular Gasoline, U.S. City Average Retail Price'] = \
+    df_oil_data_fill_na.groupby(['Month'])['Leaded Regular Gasoline, U.S. City Average Retail Price'] \
+        .apply(lambda x: x.interpolate(method='time', limit_direction='backward'))
 
 
-# Helper method to fill using interpolation
-# def fill_oil_not_available(col):
-#     df_oil_data_fill_na[col] = df_oil_data_fill_na.groupby(['Month'])[col] \
-#         .apply(lambda x: x.interpolate(method='time', limit_direction='both'))
-#     return df_oil_data_fill_na
-#
-#
-# st.dataframe(df_oil_data_fill_na)
-# fill_oil_not_applicable('Unleaded Regular Gasoline, U.S. City Average Retail Price', 1975)
+# Filling out oil data with 0 rather than interpolation due to unleaded gasoline introduction
+def fill_oil_with_zero(col):
+    df_oil_data_fill_na[col] = df_oil_data_fill_na[col].fillna(value=0)
+    return df_oil_data_fill_na
+
+
+fill_oil_with_zero('Leaded Regular Gasoline, U.S. City Average Retail Price')
+fill_oil_with_zero('Unleaded Regular Gasoline, U.S. City Average Retail Price')
+fill_oil_with_zero('All Grades of Gasoline, U.S. City Average Retail Price')
+fill_oil_with_zero('Regular Motor Gasoline, Conventional Gasoline Areas, Retail Price')
+fill_oil_with_zero('Regular Motor Gasoline, Reformulated Gasoline Areas, Retail Price')
+fill_oil_with_zero('Regular Motor Gasoline, All Areas, Retail Price')
+fill_oil_with_zero('On-Highway Diesel Fuel Price')
+
+
+def post_processed_oil():
+    st.subheader("Oil (Cleaned) Data")
+    # Default columns for oil view
+    default_cols = ['Year',
+                    'Month',
+                    'Unleaded Regular Gasoline, U.S. City Average Retail Price',
+                    'Regular Motor Gasoline, All Areas, Retail Price'
+                    ]
+    options = df_oil_data_fill_na.columns.to_list()
+    select_options = st.multiselect("Select Columns to view",
+                                    options,
+                                    default_cols)
+    filtered_df = st.dataframe(df_oil_data_fill_na[select_options])
+    return filtered_df
+
+
+def oil_clean_plot():
+    df = df_oil_data_fill_na
+    st.subheader("Oil (Cleaned) Price Graph")
+    # Creating columns for view
+    col1, col2 = st.columns(2)
+    x_axis = col1.selectbox('Select X-axis',
+                            options=df.columns)
+    y_axis = col2.selectbox('Select Y-axis',
+                            options=df.columns)
+    plot = px.area(df,
+                   x=x_axis,
+                   y=y_axis,
+                   line_group='Month',
+                   color='Month',
+                   title='Oil/Fuel Raw Plot, Prices in $/gal (incl. tax)')
+    oil_plotly_chart = st.plotly_chart(plot)
+    return oil_plotly_chart
+
+
+post_processed_oil()
+oil_clean_plot()
 
 # Creating reports, dropping date and day, as API recreates Date
 # Dropping day as it creates incorrect correlation statistics

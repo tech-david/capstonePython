@@ -15,7 +15,6 @@
 - `streamlit run Home.py`
 ## To-Dos
 > In order of priority
-- Add functions to dynamically view cleaned data
 - Downloading reports
 - Connect to S3 bucket using boto3
 - Refactor code to different pages and files to improve processing time
