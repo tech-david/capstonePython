@@ -146,7 +146,7 @@ def elec_raw_plot():
                    y=y_axis,
                    line_group='Month',
                    color='Month',
-                   title='Electricity Raw Plot, Prices in' + '\xa2' + 'per KWh (incl. tax)')
+                   title='Electricity Raw Plot, Prices in ' + '\xa2' + ' per KWh (incl. tax)')
     elec_plotly_chart = st.plotly_chart(plot)
     return elec_plotly_chart
 
@@ -195,6 +195,10 @@ def oil_raw_plot():
 st.header("Oil Product Prices Jan 1976 - Dec 2021")
 oil_raw_dataframe()
 oil_raw_plot()
+
+# Separating out raw from cleaned data
+st.header("Exploration Post Processed")
+st.markdown("> Including removal of columns, and filling null values using interpolation")
 
 # Data cleaning
 # Dictionary for Month
@@ -314,7 +318,48 @@ fill_electricity_na('Average Retail Price of Electricity, Commercial')
 fill_electricity_na('Average Retail Price of Electricity, Industrial')
 fill_electricity_na('Average Retail Price of Electricity, Transportation')
 fill_electricity_na('Average Retail Price of Electricity, Total')
-st.dataframe(df_electricity_data_fill_na)
+
+
+# Dataframe for cleaned electricity data
+def post_processed_elec():
+    st.subheader("Electricity (Cleaned) Data")
+    # Default columns for oil view
+    default_cols = ['Year',
+                    'Month',
+                    'Average Retail Price of Electricity, Residential',
+                    'Average Retail Price of Electricity, Commercial'
+                    ]
+    options = df_electricity_data_fill_na.columns.to_list()
+    select_options = st.multiselect("Select Columns to view",
+                                    options,
+                                    default_cols)
+    filtered_df = st.dataframe(df_electricity_data_fill_na[select_options])
+    return filtered_df
+
+
+post_processed_elec()
+
+
+def elec_clean_plot():
+    df = df_electricity_data_fill_na
+    st.subheader("Electricity (Clean) Price Graph")
+    # Creating columns for view
+    col1, col2 = st.columns(2)
+    x_axis = col1.selectbox('Select X-axis',
+                            options=df.columns)
+    y_axis = col2.selectbox('Select Y-axis',
+                            options=df.columns)
+    plot = px.area(df,
+                   x=x_axis,
+                   y=y_axis,
+                   line_group='Month',
+                   color='Month',
+                   title='Electricity Cleaned Plot, Prices in ' + '\xa2' + ' per KWh (incl. tax)')
+    elec_plotly_chart = st.plotly_chart(plot)
+    return elec_plotly_chart
+
+
+elec_clean_plot()
 
 # Copy oil data to start cleaning
 df_oil_data_fill_na = get_oil_data()
