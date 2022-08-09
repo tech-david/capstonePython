@@ -17,7 +17,6 @@
 > In order of priority
 - Downloading reports
 - Connect to S3 bucket using boto3
-- Refactor code to different pages and files to improve processing time
 - Integrate upload functionality
 - Data cleaning options
 - Model creation
