@@ -461,6 +461,14 @@ natural_gas_profile = ProfileReport(df_gas_data_fill_na.drop(columns=['Date', 'D
                                     })
 
 st.title("Reports of natural gas data after filling NA values")
-st_profile_report(natural_gas_profile)
+natural_gas_report = st_profile_report(natural_gas_profile)
 # Saving created report to folder
 natural_gas_profile.to_file("reports/Natural_Gas_Reports.html")
+
+with open("reports/Natural_Gas_Reports.html", encoding='utf8') as file:
+    btn = st.download_button(
+        label="Download natural gas report (HTML)",
+        data=file,
+        file_name="Natural_Gas_Reports.html",
+        mime='text/html'
+    )
