@@ -245,15 +245,47 @@ fill_gas_na('Natural Gas Price, Delivered to Consumers, Commercial')
 fill_gas_na('Natural Gas Price, Delivered to Consumers, Industrial')
 fill_gas_na('Natural Gas Price, Electric Power Sector')
 
-st.dataframe(df_gas_data_fill_na)
-fig_natural_gas = px.area(df_gas_data_fill_na,
-                          x='Year',
-                          y='Natural Gas Price, Delivered to Consumers, Residential',
-                          line_group='Month',
-                          color='Month',
-                          title='Natural Gas Price, Delivered to Consumers, Residential',
-                          labels={'Natural Gas Price, Delivered to Consumers, Residential': '$/1000 cu. ft.'})
-st.plotly_chart(fig_natural_gas)
+
+# Dataframe for cleaned natural gas data
+def post_processed_gas():
+    st.subheader("Natural Gas (Cleaned) Data")
+    # Default columns for oil view
+    default_cols = ['Year',
+                    'Month',
+                    'Natural Gas Price, Delivered to Consumers, Residential',
+                    'Natural Gas Price, Delivered to Consumers, Commercial'
+                    ]
+    options = df_gas_data_fill_na.columns.to_list()
+    select_options = st.multiselect("Select Columns to view",
+                                    options,
+                                    default_cols)
+    filtered_df = st.dataframe(df_gas_data_fill_na[select_options])
+    return filtered_df
+
+
+post_processed_gas()
+
+
+def gas_clean_plot():
+    df = df_gas_data_fill_na
+    st.subheader("Natural Gas (Clean) Price Graph")
+    # Creating columns for view
+    col1, col2 = st.columns(2)
+    x_axis = col1.selectbox('Select X-axis',
+                            options=df.columns)
+    y_axis = col2.selectbox('Select Y-axis',
+                            options=df.columns)
+    plot = px.area(df,
+                   x=x_axis,
+                   y=y_axis,
+                   line_group='Month',
+                   color='Month',
+                   title='Natural Gas Cleaned Plot, Prices in $/1000 cu. ft.')
+    gas_plotly_chart = st.plotly_chart(plot)
+    return gas_plotly_chart
+
+
+gas_clean_plot()
 
 # Copy electricity data to start cleaning
 df_electricity_data_fill_na = get_electricity_data()
