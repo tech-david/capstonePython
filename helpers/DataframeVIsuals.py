@@ -1,3 +1,4 @@
+from helpers.Cleaner import fill_electricity_na, fill_gas_na, fill_oil_na
 from helpers.GetRawData import get_gas_data, get_electricity_data, get_oil_data
 import streamlit as st
 
@@ -48,4 +49,54 @@ def oil_raw_dataframe():
                                     options,
                                     default_cols)
     filtered_df = st.dataframe(df_oil_data[select_options])
+    return filtered_df
+
+
+# Dataframe for cleaned natural gas data
+def post_processed_gas():
+    df_gas_data_fill_na = fill_gas_na()
+    # Default columns for oil view
+    default_cols = ['Year',
+                    'Month',
+                    'Natural Gas Price, Delivered to Consumers, Residential',
+                    'Natural Gas Price, Delivered to Consumers, Commercial'
+                    ]
+    options = df_gas_data_fill_na.columns.to_list()
+    select_options = st.multiselect("Select Columns to view",
+                                    options,
+                                    default_cols)
+    filtered_df = st.dataframe(df_gas_data_fill_na[select_options])
+    return filtered_df
+
+
+# Dataframe for cleaned electricity data
+def post_processed_elec():
+    df_electricity_data_fill_na = fill_electricity_na()
+    # Default columns for oil view
+    default_cols = ['Year',
+                    'Month',
+                    'Average Retail Price of Electricity, Residential',
+                    'Average Retail Price of Electricity, Commercial'
+                    ]
+    options = df_electricity_data_fill_na.columns.to_list()
+    select_options = st.multiselect("Select Columns to view",
+                                    options,
+                                    default_cols)
+    filtered_df = st.dataframe(df_electricity_data_fill_na[select_options])
+    return filtered_df
+
+
+def post_processed_oil():
+    df_oil_data_fill_na = fill_oil_na()
+    # Default columns for oil view
+    default_cols = ['Year',
+                    'Month',
+                    'Unleaded Regular Gasoline, U.S. City Average Retail Price',
+                    'Regular Motor Gasoline, All Areas, Retail Price'
+                    ]
+    options = df_oil_data_fill_na.columns.to_list()
+    select_options = st.multiselect("Select Columns to view",
+                                    options,
+                                    default_cols)
+    filtered_df = st.dataframe(df_oil_data_fill_na[select_options])
     return filtered_df
