@@ -52,3 +52,28 @@ def get_oil_data():
     move_year_to_first_oil = df_oil_data.pop('Year')
     df_oil_data.insert(0, 'Year', move_year_to_first_oil)
     return df_oil_data
+
+
+@st.cache
+def get_avg_house_data():
+    df_aspus_data = pd.read_csv("data/ASPUS.csv",
+                                header=[0])
+    return df_aspus_data
+
+
+@st.cache
+def get_median_house_data():
+    df_mspus_data = pd.read_csv("data/MSPUS.csv",
+                                header=[0])
+    return df_mspus_data
+
+
+def get_raw_house_data():
+    df1 = get_avg_house_data()
+    df2 = get_median_house_data()
+    df2 = df2.drop(columns=['observation_date'])
+    df = pd.concat([df1, df2],
+                   axis=1)
+    df = df.rename(columns={"ASPUS": "Average Sales Price",
+                            "MSPUS": "Median Sales Price"})
+    return df

@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from helpers.GetRawData import get_gas_data, get_electricity_data, get_oil_data
+from helpers.GetRawData import get_gas_data, get_electricity_data, get_oil_data, get_raw_house_data
 
 # Data cleaning
 # Dictionary for Month
@@ -121,3 +121,12 @@ def fill_oil_na():
         df_oil_data_fill_na[i] = df_oil_data_fill_na[i].fillna(value=0)
         return df_oil_data_fill_na
     return df_oil_data_fill_na
+
+
+def resample_house():
+    df = get_raw_house_data()
+    df['observation_date'] = pd.to_datetime(df['observation_date'])
+    df.set_index('observation_date', inplace=True)
+    # Resampling from quarterly to monthly data, then filling NA with interpolation
+    df = df.resample('MS').interpolate(method='linear', limit_direction='backward')
+    return df

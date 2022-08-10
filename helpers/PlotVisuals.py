@@ -1,7 +1,8 @@
-from helpers.Cleaner import fill_electricity_na, fill_gas_na, fill_oil_na
-from helpers.GetRawData import get_gas_data, get_electricity_data, get_oil_data
+from helpers.Cleaner import fill_electricity_na, fill_gas_na, fill_oil_na, resample_house
+from helpers.GetRawData import get_gas_data, get_electricity_data, get_oil_data, get_raw_house_data
 import streamlit as st
 import plotly.express as px
+import plotly.graph_objects as go
 
 
 def gas_raw_plot():
@@ -58,6 +59,27 @@ def oil_raw_plot():
     return oil_plotly_chart
 
 
+def house_raw_plot():
+    df = get_raw_house_data()
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=df['observation_date'],
+                             y=df["Average Sales Price"],
+                             fill='tonexty',
+                             name='Average Sales Price'))
+    fig.add_trace(go.Scatter(x=df['observation_date'],
+                             y=df["Median Sales Price"],
+                             fill='tozeroy',
+                             name='Median Sales Price'))
+    fig.update_layout(
+        title='Price of Homes in $',
+        legend_title='Type of price',
+        xaxis_title='Time',
+        yaxis_title='Dollars ($)'
+    )
+    house_plotly_chart = st.plotly_chart(fig)
+    return house_plotly_chart
+
+
 def gas_clean_plot():
     df = fill_gas_na()
     # Creating columns for view
@@ -110,3 +132,24 @@ def oil_clean_plot():
                    title='Oil/Fuel Raw Plot, Prices in $/gal (incl. tax)')
     oil_plotly_chart = st.plotly_chart(plot)
     return oil_plotly_chart
+
+
+def house_clean_plot():
+    df = resample_house()
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=df.index,
+                             y=df["Average Sales Price"],
+                             fill='tonexty',
+                             name='Average Sales Price'))
+    fig.add_trace(go.Scatter(x=df.index,
+                             y=df["Median Sales Price"],
+                             fill='tozeroy',
+                             name='Median Sales Price'))
+    fig.update_layout(
+        title='Price of Homes in $',
+        legend_title='Type of price',
+        xaxis_title='Time',
+        yaxis_title='Dollars ($)'
+    )
+    house_plotly_chart = st.plotly_chart(fig)
+    return house_plotly_chart

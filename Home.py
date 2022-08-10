@@ -17,6 +17,7 @@ st.markdown(
     ### About
     - Navigate to 'About'
       - Provides information about application and its use
-    ### Preloaded data
-    - Navigate to 'DataExploration'
+    ### DataExploration
+    - Raw data exploration, consists of interactive dataframes and plots
+    ### Elec
     """)

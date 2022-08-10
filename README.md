@@ -15,7 +15,6 @@
 - `streamlit run Home.py`
 ## To-Dos
 > In order of priority
-- Downloading reports
 - Connect to S3 bucket using boto3
 - Integrate upload functionality
 - Data cleaning options
