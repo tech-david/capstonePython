@@ -1,6 +1,5 @@
-from helpers.Cleaner import fill_gas_na, fill_electricity_na, fill_oil_na
+from helpers.Cleaner import fill_gas_na, fill_electricity_na, fill_oil_na, resample_house
 from pandas_profiling import ProfileReport
-import streamlit as st
 
 
 # Creating reports, dropping date and day, as API recreates Date
@@ -8,7 +7,7 @@ def create_gas_profile():
     df = fill_gas_na()
 
     # Dropping day as it creates incorrect correlation statistics
-    natural_gas_profile = ProfileReport(df.drop(columns=['Date', 'Day']),
+    natural_gas_profile = ProfileReport(df.drop(columns=['Date', 'Day', 'Year', 'Month']),
                                         title="Natural Gas Reports",
                                         dataset={
                                             "description": "Reports of cleaned natural gas dataset"
@@ -39,7 +38,7 @@ def create_gas_profile():
 
 def create_elec_profile():
     df = fill_electricity_na()
-    electricity_profile = ProfileReport(df.drop(columns=['Date', 'Day']),
+    electricity_profile = ProfileReport(df.drop(columns=['Date', 'Day', 'Year', 'Month']),
                                         title='Electricity Reports',
                                         dataset={
                                             "description": "Reports of cleaned electricity dataset"
@@ -68,7 +67,7 @@ def create_elec_profile():
 
 def create_oil_profile():
     df = fill_oil_na()
-    oil_profile = ProfileReport(df.drop(columns=['Date', 'Day']),
+    oil_profile = ProfileReport(df.drop(columns=['Date', 'Day', 'Year', 'Month']),
                                 title="Oil Reports",
                                 dataset={
                                     "description": "Reports of cleaned oil dataset"
@@ -104,3 +103,19 @@ def create_oil_profile():
                                     }
                                 })
     return oil_profile
+
+
+def create_home_profile():
+    df = resample_house()
+    home_profile = ProfileReport(df,
+                                 title='Home Price Reports',
+                                 dataset={
+                                     "description": "Reports of average and median home prices in US"
+                                 },
+                                 variables={
+                                     "descriptions": {
+                                         "Average Sales Price": "Average price of homes sold in $",
+                                         "Median Sales Price": "Median price of homes sold in $"
+                                     }
+                                 })
+    return home_profile

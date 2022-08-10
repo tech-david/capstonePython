@@ -42,17 +42,26 @@ def resample_gas():
 
 # Helper method to fill NA values using interpolation
 def fill_gas_na():
-    df_gas_data_fill_na = resample_gas()
-    col = ['Natural Gas Price, Delivered to Consumers, Residential',
-           'Natural Gas Price, Wellhead',
-           'Natural Gas Price, Citygate',
-           'Natural Gas Price, Delivered to Consumers, Commercial',
-           'Natural Gas Price, Delivered to Consumers, Industrial',
-           'Natural Gas Price, Electric Power Sector']
-    for i in col:
-        df_gas_data_fill_na[i] = df_gas_data_fill_na.groupby(['Month'])[i] \
+    df = resample_gas()
+    df['Natural Gas Price, Delivered to Consumers, Residential'] = \
+        df.groupby(['Month'])['Natural Gas Price, Delivered to Consumers, Residential'] \
             .apply(lambda x: x.interpolate(method='time', limit_direction='both'))
-    return df_gas_data_fill_na
+    df['Natural Gas Price, Wellhead'] = \
+        df.groupby(['Month'])['Natural Gas Price, Wellhead'] \
+            .apply(lambda x: x.interpolate(method='time', limit_direction='both'))
+    df['Natural Gas Price, Citygate'] = \
+        df.groupby(['Month'])['Natural Gas Price, Citygate'] \
+            .apply(lambda x: x.interpolate(method='time', limit_direction='both'))
+    df['Natural Gas Price, Delivered to Consumers, Commercial'] = \
+        df.groupby(['Month'])['Natural Gas Price, Delivered to Consumers, Commercial'] \
+            .apply(lambda x: x.interpolate(method='time', limit_direction='both'))
+    df['Natural Gas Price, Delivered to Consumers, Industrial'] = \
+        df.groupby(['Month'])['Natural Gas Price, Delivered to Consumers, Industrial'] \
+            .apply(lambda x: x.interpolate(method='time', limit_direction='both'))
+    df['Natural Gas Price, Electric Power Sector'] = \
+        df.groupby(['Month'])['Natural Gas Price, Electric Power Sector'] \
+            .apply(lambda x: x.interpolate(method='time', limit_direction='both'))
+    return df
 
 
 def resample_elec():
@@ -75,16 +84,20 @@ def resample_elec():
 
 # Helper method to fill using interpolation
 def fill_electricity_na():
-    df_electricity_data_fill_na = resample_elec()
-    col = ['Average Retail Price of Electricity, Residential',
-           'Average Retail Price of Electricity, Commercial',
-           'Average Retail Price of Electricity, Industrial',
-           'Average Retail Price of Electricity, Transportation',
-           'Average Retail Price of Electricity, Total']
-    for i in col:
-        df_electricity_data_fill_na[i] = df_electricity_data_fill_na.groupby(['Month'])[i] \
-            .apply(lambda x: x.interpolate(method='time', limit_direction='both'))
-    return df_electricity_data_fill_na
+    df = resample_elec()
+    df['Average Retail Price of Electricity, Industrial'] = \
+        df.groupby(['Month'])['Average Retail Price of Electricity, Industrial'] \
+            .apply(lambda x: x.interpolate(method='linear', limit_direction='backward'))
+    df['Average Retail Price of Electricity, Residential'] = \
+        df.groupby(['Month'])['Average Retail Price of Electricity, Residential'] \
+            .apply(lambda x: x.interpolate(method='linear', limit_direction='backward'))
+    df['Average Retail Price of Electricity, Commercial'] = \
+        df.groupby(['Month'])['Average Retail Price of Electricity, Commercial'] \
+            .apply(lambda x: x.interpolate(method='linear', limit_direction='backward'))
+    df['Average Retail Price of Electricity, Total'] = \
+        df.groupby(['Month'])['Average Retail Price of Electricity, Total'] \
+            .apply(lambda x: x.interpolate(method='linear', limit_direction='backward'))
+    return df
 
 
 def resample_oil():
@@ -105,22 +118,15 @@ def resample_oil():
 
 
 def fill_oil_na():
-    df_oil_data_fill_na = resample_oil()
+    df = resample_oil()
     # Filling out Leaded Regular Gasoline with 0 after April 1991 (no longer used) and interpolating for NA in 1976
-    df_oil_data_fill_na['Leaded Regular Gasoline, U.S. City Average Retail Price'] = \
-        df_oil_data_fill_na.groupby(['Month'])['Leaded Regular Gasoline, U.S. City Average Retail Price'] \
+    df['Leaded Regular Gasoline, U.S. City Average Retail Price'] = \
+        df.groupby(['Month'])['Leaded Regular Gasoline, U.S. City Average Retail Price'] \
             .apply(lambda x: x.interpolate(method='time', limit_direction='backward'))
-    col = ['Leaded Regular Gasoline, U.S. City Average Retail Price',
-           'Unleaded Regular Gasoline, U.S. City Average Retail Price',
-           'All Grades of Gasoline, U.S. City Average Retail Price',
-           'Regular Motor Gasoline, Conventional Gasoline Areas, Retail Price',
-           'Regular Motor Gasoline, Reformulated Gasoline Areas, Retail Price',
-           'Regular Motor Gasoline, All Areas, Retail Price',
-           'On-Highway Diesel Fuel Price']
-    for i in col:
-        df_oil_data_fill_na[i] = df_oil_data_fill_na[i].fillna(value=0)
-        return df_oil_data_fill_na
-    return df_oil_data_fill_na
+    df['All Grades of Gasoline, U.S. City Average Retail Price'] = \
+        df.groupby(['Month'])['All Grades of Gasoline, U.S. City Average Retail Price'] \
+            .apply(lambda x: x.interpolate(method='time', limit_direction='backward'))
+    return df
 
 
 def resample_house():

@@ -1,7 +1,7 @@
 from streamlit_pandas_profiling import st_profile_report
 import streamlit as st
 
-from helpers.ReportBuilder import create_gas_profile, create_elec_profile, create_oil_profile
+from helpers.ReportBuilder import create_gas_profile, create_elec_profile, create_oil_profile, create_home_profile
 
 
 # Saving created report to folder
@@ -21,6 +21,12 @@ def fuel_profile():
     oil_profile = create_oil_profile()
     oil_profile.to_file("reports/Oil_Reports.html")
     return oil_profile
+
+
+def house_profile():
+    home_profile = create_home_profile()
+    home_profile.to_file("reports/House_Reports.html")
+    return home_profile
 
 
 # Populating data into page
@@ -43,3 +49,10 @@ def oil_reporting():
         oil_profile = fuel_profile()
         oil_report = st_profile_report(oil_profile)
         return oil_report
+
+
+def home_reporting():
+    with st.spinner(text="Creating home reports"):
+        home_profile = house_profile()
+        home_report = st_profile_report(home_profile)
+        return home_report
