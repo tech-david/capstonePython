@@ -1,5 +1,5 @@
 from helpers.Cleaner import fill_electricity_na, fill_gas_na, fill_oil_na, resample_house
-from helpers.GetRawData import get_gas_data, get_electricity_data, get_oil_data, get_raw_house_data
+from helpers.GetRawData import get_gas_data, get_electricity_data, get_oil_data, get_raw_house_data, get_recession_data
 import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
@@ -153,3 +153,17 @@ def house_clean_plot():
     )
     house_plotly_chart = st.plotly_chart(fig)
     return house_plotly_chart
+
+
+def recession_raw_plot():
+    df = get_recession_data()
+    fig = go.Figure()
+    fig.add_scatter(x=df['DATE'],
+                    y=df['USREC'])
+    fig.update_layout(
+        title='NBER Indicated Recession',
+        xaxis_title='Time',
+        yaxis_title='Recession (1: Recession, 0: No Recession)'
+    )
+    recession_plotly_chart = st.plotly_chart(fig)
+    return recession_plotly_chart

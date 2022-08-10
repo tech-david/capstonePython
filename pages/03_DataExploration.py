@@ -1,8 +1,7 @@
 import streamlit as st
-from streamlit_pandas_profiling import st_profile_report
 from helpers.DataframeVIsuals import gas_raw_dataframe, elec_raw_dataframe, oil_raw_dataframe
-from helpers.GetRawData import get_raw_house_data
-from helpers.PlotVisuals import gas_raw_plot, elec_raw_plot, oil_raw_plot, house_raw_plot
+from helpers.GetRawData import get_raw_house_data, get_recession_data
+from helpers.PlotVisuals import gas_raw_plot, elec_raw_plot, oil_raw_plot, house_raw_plot, recession_raw_plot
 
 st.set_page_config(page_title="Data Exploration",
                    layout="wide")
@@ -47,3 +46,11 @@ st.dataframe(get_raw_house_data())
 
 st.subheader("Home Price Graph")
 house_raw_plot()
+
+st.header("NBER Indicated Recessions 1940-2021")
+st.subheader("Recession Data")
+st.markdown("> 0 indicates no recession, 1 indicates recession")
+st.dataframe(get_recession_data())
+
+st.subheader("Recession Graph")
+recession_raw_plot()

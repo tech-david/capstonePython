@@ -77,3 +77,9 @@ def get_raw_house_data():
     df = df.rename(columns={"ASPUS": "Average Sales Price",
                             "MSPUS": "Median Sales Price"})
     return df
+
+
+def get_recession_data():
+    df = pd.read_csv('data/USREC.csv',
+                     header=[0])
+    return df

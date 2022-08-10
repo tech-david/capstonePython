@@ -2,7 +2,8 @@ import streamlit as st
 
 from helpers.Cleaner import resample_house
 from helpers.DataframeVIsuals import post_processed_gas, post_processed_elec, post_processed_oil
-from helpers.PlotVisuals import gas_clean_plot, elec_clean_plot, oil_clean_plot, house_clean_plot
+from helpers.GetRawData import get_recession_data
+from helpers.PlotVisuals import gas_clean_plot, elec_clean_plot, oil_clean_plot, house_clean_plot, recession_raw_plot
 
 st.set_page_config(page_title="Data Exploration After Cleaning",
                    layout="wide")
@@ -44,3 +45,11 @@ st.dataframe(resample_house().style.format("{:.2f}"))
 
 st.subheader("Home Price Graph")
 house_clean_plot()
+
+st.header("NBER Indicated Recessions 1940-2021")
+st.subheader("Recession Data")
+st.markdown("> 0 indicates no recession, 1 indicates recession")
+st.dataframe(get_recession_data())
+
+st.subheader("Recession Graph")
+recession_raw_plot()
