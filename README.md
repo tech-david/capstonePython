@@ -6,7 +6,7 @@
 - Python 3.9
 - Pandas 1.4.3
 - Numpy 1.23.1
-- Streamlit 1.23.1
+- Streamlit 1.12.0
 - Plotly 5.9.0
 - pandas-profiling 3.2.0
 - streamlit-pandas-profiling 0.1.3
