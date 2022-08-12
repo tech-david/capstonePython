@@ -2,6 +2,7 @@ from model.features.FeaturesAggregator import get_all_features
 import streamlit as st
 
 
+# Calculating percentage difference between each timestamps (row index)
 @st.cache
 def percent_change():
     df = get_all_features()

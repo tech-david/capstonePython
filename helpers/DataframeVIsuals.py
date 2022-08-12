@@ -14,6 +14,7 @@ def gas_raw_dataframe():
                     'Natural Gas Price, Delivered to Consumers, Commercial',
                     'Percentage of Electric Power Sector Consumption for Which Price Data Are Available']
     options = df_gas_data.columns.to_list()
+    # Creating options to choose which columns to compare graphically
     select_options = st.multiselect("Select Columns to view",
                                     options,
                                     default_cols)
@@ -29,6 +30,7 @@ def elec_raw_dataframe():
                     'Average Retail Price of Electricity, Residential',
                     'Average Retail Price of Electricity, Commercial']
     options = df_electricity_data.columns.to_list()
+    # Creating options to choose which columns to compare graphically
     select_options = st.multiselect("Select Columns to view",
                                     options,
                                     default_cols)
@@ -45,6 +47,7 @@ def oil_raw_dataframe():
                     'Regular Motor Gasoline, All Areas, Retail Price',
                     'On-Highway Diesel Fuel Price']
     options = df_oil_data.columns.to_list()
+    # Creating options to choose which columns to compare graphically
     select_options = st.multiselect("Select Columns to view",
                                     options,
                                     default_cols)
@@ -62,6 +65,7 @@ def post_processed_gas():
                     'Natural Gas Price, Delivered to Consumers, Commercial'
                     ]
     options = df_gas_data_fill_na.columns.to_list()
+    # Creating options to choose which columns to compare graphically
     select_options = st.multiselect("Select Columns to view",
                                     options,
                                     default_cols)
@@ -79,6 +83,7 @@ def post_processed_elec():
                     'Average Retail Price of Electricity, Commercial'
                     ]
     options = df_electricity_data_fill_na.columns.to_list()
+    # Creating options to choose which columns to compare graphically
     select_options = st.multiselect("Select Columns to view",
                                     options,
                                     default_cols)
@@ -95,6 +100,7 @@ def post_processed_oil():
                     'Regular Motor Gasoline, All Areas, Retail Price'
                     ]
     options = df_oil_data_fill_na.columns.to_list()
+    # Creating options to choose which columns to compare graphically
     select_options = st.multiselect("Select Columns to view",
                                     options,
                                     default_cols)

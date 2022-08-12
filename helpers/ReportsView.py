@@ -4,7 +4,7 @@ from streamlit_pandas_profiling import st_profile_report
 from helpers.ReportsWriter import gas_profile, elec_profile, fuel_profile, house_profile, features_profile
 
 
-# Populating data into page
+# Populating data into page using spinner to indicate loading
 def gas_reporting():
     with st.spinner(text="Creating natural gas reports"):
         natural_gas_profile = gas_profile()

@@ -1,4 +1,3 @@
-import streamlit as st
 
 from helpers.Cleaner import fill_gas_na, fill_electricity_na, fill_oil_na, resample_house
 
@@ -15,6 +14,7 @@ def get_all_features():
     df_house = resample_house()
 
     df = df_ng
+    # Merging on different columns (outer), sorting to keep chronological order
     df = df.merge(df_elec, how='outer', on='Date', sort=True)
     df = df.merge(df_oil, how='outer', on='Date', sort=True)
     df = df.join(df_house)

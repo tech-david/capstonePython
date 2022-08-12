@@ -2,7 +2,7 @@ from helpers.ReportBuilder import create_gas_profile, create_elec_profile, creat
     create_features_profile
 
 
-# Saving created report to folder
+# Saving created reports to folder as an HTML file
 def gas_profile():
     natural_gas_profile = create_gas_profile()
     natural_gas_profile.to_file("reports/Natural_Gas_Reports.html")
