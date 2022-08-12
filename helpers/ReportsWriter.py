@@ -31,5 +31,3 @@ def features_profile():
     feature_profile = create_features_profile()
     feature_profile.to_file("reports/Features_Report.html")
     return feature_profile
-
-

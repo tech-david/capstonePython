@@ -1,5 +1,4 @@
 import streamlit as st
-
 from helpers.ReportsView import oil_reporting
 
 st.set_page_config(page_title="Data Reports (Oil)",

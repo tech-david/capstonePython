@@ -1,6 +1,6 @@
 import streamlit as st
-
 from helpers.ReportsView import elec_reporting
+
 
 st.set_page_config(page_title="Data Reports (Electricity)",
                    layout="wide")

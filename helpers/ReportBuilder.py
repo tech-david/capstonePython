@@ -4,8 +4,6 @@ from model.features.FeaturesPctChange import percent_change
 
 
 # Creating reports, dropping date and day, as API recreates Date
-
-
 def create_gas_profile():
     df = fill_gas_na()
 
@@ -34,6 +32,7 @@ def create_gas_profile():
                                                                                                          "paid for by "
                                                                                                          "industrial "
                                                                                                          "users "
+
                                             }
                                         })
     return natural_gas_profile

@@ -1,6 +1,7 @@
 import streamlit as st
 from helpers.ReportsView import home_reporting
 
+
 st.set_page_config(page_title="Data Reports (Home Prices)",
                    layout="wide")
 st.title("Reports for datasets after cleaning")
