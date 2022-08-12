@@ -1,4 +1,3 @@
-
 from helpers.Cleaner import fill_gas_na, fill_electricity_na, fill_oil_na, resample_house
 
 
@@ -12,6 +11,8 @@ def get_all_features():
     df_oil = fill_oil_na()
     df_oil.drop(columns=col, inplace=True)
     df_house = resample_house()
+    df_house = df_house.rename(columns={'Average Sales Price': 'Homes Average Sales Price',
+                                        'Median Sales Price': 'Homes Median Sales Price'})
 
     df = df_ng
     # Merging on different columns (outer), sorting to keep chronological order

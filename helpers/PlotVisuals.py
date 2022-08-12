@@ -188,7 +188,8 @@ def pct_change_plot():
                   x=df.index,
                   y=feature_select,
                   markers=True,
-                  labels={feature_select: '% change in price'})
+                  labels={feature_select: '%'},
+                  title='Price change of ' + feature_select)
     fig.update_traces(line_color='#128229',
                       line_width=1)
     plot = st.plotly_chart(fig,

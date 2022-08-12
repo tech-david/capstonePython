@@ -2,6 +2,8 @@ from helpers.Cleaner import fill_electricity_na, fill_gas_na, fill_oil_na
 from helpers.GetRawData import get_gas_data, get_electricity_data, get_oil_data
 import streamlit as st
 
+from model.features.FeaturesPctChange import percent_change
+
 
 def gas_raw_dataframe():
     df_gas_data = get_gas_data()
@@ -106,3 +108,18 @@ def post_processed_oil():
                                     default_cols)
     filtered_df = st.dataframe(df_oil_data_fill_na[select_options])
     return filtered_df
+
+
+def all_features():
+    df = percent_change()
+    default_cols = ['Natural Gas Price, Delivered to Consumers, Residential',
+                    'Average Retail Price of Electricity, Residential',
+                    'Unleaded Regular Gasoline, U.S. City Average Retail Price',
+                    'Homes Average Sales Price']
+    options = df.columns.to_list()
+    select_options = st.multiselect("Select Columns to view",
+                                    options,
+                                    default_cols)
+    filtered_df = st.dataframe(df[select_options])
+    return filtered_df
+
