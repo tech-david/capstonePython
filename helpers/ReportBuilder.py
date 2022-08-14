@@ -10,6 +10,7 @@ def create_gas_profile():
     # Dropping day as it creates incorrect correlation statistics
     natural_gas_profile = ProfileReport(df.drop(columns=['Date', 'Day', 'Year', 'Month']),
                                         title="Natural Gas Reports",
+                                        minimal=True,
                                         dataset={
                                             "description": "Reports of cleaned natural gas dataset"
                                         },
@@ -42,6 +43,7 @@ def create_elec_profile():
     df = fill_electricity_na()
     electricity_profile = ProfileReport(df.drop(columns=['Date', 'Day', 'Year', 'Month']),
                                         title='Electricity Reports',
+                                        minimal=True,
                                         dataset={
                                             "description": "Reports of cleaned electricity dataset"
                                         },
@@ -71,6 +73,7 @@ def create_oil_profile():
     df = fill_oil_na()
     oil_profile = ProfileReport(df.drop(columns=['Date', 'Day', 'Year', 'Month']),
                                 title="Oil Reports",
+                                minimal=True,
                                 dataset={
                                     "description": "Reports of cleaned oil dataset"
                                 },
@@ -110,6 +113,7 @@ def create_home_profile():
     df = resample_house()
     home_profile = ProfileReport(df,
                                  title='Home Price Reports',
+                                 minimal=True,
                                  dataset={
                                      "description": "Reports of average and median home prices in US"
                                  },

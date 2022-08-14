@@ -16,11 +16,11 @@ def gas_raw_plot():
     y_axis = col2.selectbox('Select Y-axis',
                             options=df.columns)
     fig = px.area(df,
-                   x=x_axis,
-                   y=y_axis,
-                   line_group='Month',
-                   color='Month',
-                   title='Natural Gas Raw Plot, Prices in $/1000 cu. ft.')
+                  x=x_axis,
+                  y=y_axis,
+                  line_group='Month',
+                  color='Month',
+                  title='Natural Gas Raw Plot, Prices in $/1000 cu. ft.')
     plot = st.plotly_chart(fig,
                            use_container_width=True)
     return plot
@@ -35,11 +35,11 @@ def elec_raw_plot():
     y_axis = col2.selectbox('Select Y-axis',
                             options=df.columns)
     fig = px.area(df,
-                   x=x_axis,
-                   y=y_axis,
-                   line_group='Month',
-                   color='Month',
-                   title='Electricity Raw Plot, Prices in ' + '\xa2' + ' per KWh (incl. tax)')
+                  x=x_axis,
+                  y=y_axis,
+                  line_group='Month',
+                  color='Month',
+                  title='Electricity Raw Plot, Prices in ' + '\xa2' + ' per KWh (incl. tax)')
     plot = st.plotly_chart(fig,
                            use_container_width=True)
     return plot
@@ -54,11 +54,11 @@ def oil_raw_plot():
     y_axis = col2.selectbox('Select Y-axis',
                             options=df.columns)
     fig = px.area(df,
-                   x=x_axis,
-                   y=y_axis,
-                   line_group='Month',
-                   color='Month',
-                   title='Oil/Fuel Raw Plot, Prices in $/gal (incl. tax)')
+                  x=x_axis,
+                  y=y_axis,
+                  line_group='Month',
+                  color='Month',
+                  title='Oil/Fuel Raw Plot, Prices in $/gal (incl. tax)')
     plot = st.plotly_chart(fig,
                            use_container_width=True)
     return plot
@@ -95,11 +95,11 @@ def gas_clean_plot():
     y_axis = col2.selectbox('Select Y-axis',
                             options=df.columns)
     fig = px.area(df,
-                   x=x_axis,
-                   y=y_axis,
-                   line_group='Month',
-                   color='Month',
-                   title='Natural Gas Cleaned Plot, Prices in $/1000 cu. ft.')
+                  x=x_axis,
+                  y=y_axis,
+                  line_group='Month',
+                  color='Month',
+                  title='Natural Gas Cleaned Plot, Prices in $/1000 cu. ft.')
     plot = st.plotly_chart(fig,
                            use_container_width=True)
     return plot
@@ -114,11 +114,11 @@ def elec_clean_plot():
     y_axis = col2.selectbox('Select Y-axis',
                             options=df.columns)
     fig = px.area(df,
-                   x=x_axis,
-                   y=y_axis,
-                   line_group='Month',
-                   color='Month',
-                   title='Electricity Cleaned Plot, Prices in ' + '\xa2' + ' per KWh (incl. tax)')
+                  x=x_axis,
+                  y=y_axis,
+                  line_group='Month',
+                  color='Month',
+                  title='Electricity Cleaned Plot, Prices in ' + '\xa2' + ' per KWh (incl. tax)')
     plot = st.plotly_chart(fig,
                            use_container_width=True)
     return plot
@@ -133,11 +133,11 @@ def oil_clean_plot():
     y_axis = col2.selectbox('Select Y-axis',
                             options=df.columns)
     fig = px.area(df,
-                   x=x_axis,
-                   y=y_axis,
-                   line_group='Month',
-                   color='Month',
-                   title='Oil/Fuel Raw Plot, Prices in $/gal (incl. tax)')
+                  x=x_axis,
+                  y=y_axis,
+                  line_group='Month',
+                  color='Month',
+                  title='Oil/Fuel Raw Plot, Prices in $/gal (incl. tax)')
     plot = st.plotly_chart(fig,
                            use_container_width=True)
     return plot
@@ -195,4 +195,3 @@ def pct_change_plot():
     plot = st.plotly_chart(fig,
                            use_container_width=True)
     return plot
-
