@@ -4,6 +4,7 @@ import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
 
+from model.dataset.FullDataset import min_max_data
 from model.features.FeaturesPctChange import percent_change
 
 
@@ -189,6 +190,23 @@ def pct_change_plot():
                   y=feature_select,
                   markers=True,
                   labels={feature_select: '%'},
+                  title='Price change of ' + feature_select)
+    fig.update_traces(line_color='#128229',
+                      line_width=1)
+    plot = st.plotly_chart(fig,
+                           use_container_width=True)
+    return plot
+
+
+def std_plot():
+    df = min_max_data()
+    feature_select = st.selectbox(label="Select a feature",
+                                  options=df.columns)
+    fig = px.line(df,
+                  x=df.index,
+                  y=feature_select,
+                  markers=True,
+                  labels={feature_select: 'Standardized Change'},
                   title='Price change of ' + feature_select)
     fig.update_traces(line_color='#128229',
                       line_width=1)

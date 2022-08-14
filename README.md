@@ -10,6 +10,7 @@
 - Plotly 5.9.0
 - pandas-profiling 3.2.0
 - streamlit-pandas-profiling 0.1.3
+- sklearn 1.1.2
 ## Instructions
 > Once cloned, enter the following command on Powershell/Command line (depending on OS) to run locally 
 - `streamlit run Home.py`

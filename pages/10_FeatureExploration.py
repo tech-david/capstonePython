@@ -1,6 +1,7 @@
 import streamlit as st
 from helpers.DataframeVIsuals import all_features
 from helpers.PlotVisuals import pct_change_plot
+from model.dataset.FullDataset import describe_data
 
 st.set_page_config(page_title="Percentage Difference",
                    layout='wide')
@@ -12,4 +13,7 @@ st.subheader("Price Change Data")
 all_features()
 st.subheader("Price Change Graphs")
 pct_change_plot()
+st.subheader("Price change metrics")
+describe_data()
+
 
