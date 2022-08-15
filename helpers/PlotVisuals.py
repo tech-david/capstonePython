@@ -3,8 +3,10 @@ from helpers.GetRawData import get_gas_data, get_electricity_data, get_oil_data,
 import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
-
-from model.dataset.FullDataset import min_max_data
+import plotly.figure_factory as ff
+import seaborn as sns
+import matplotlib.pyplot as plt
+from model.dataset.FullDataset import min_max_data, build_target
 from model.features.FeaturesPctChange import percent_change
 
 
@@ -212,4 +214,17 @@ def std_plot():
                       line_width=1)
     plot = st.plotly_chart(fig,
                            use_container_width=True)
+    return plot
+
+
+def std_box_plots():
+    x = min_max_data()
+    y = build_target()
+    df = x
+    df = df.join(y)
+    target = df.pop('USREC')
+    df.insert(0, 'USREC', target)
+    fig, ax = plt.subplots()
+    sns.heatmap(x.corr(), ax=ax)
+    plot = st.write(fig)
     return plot
