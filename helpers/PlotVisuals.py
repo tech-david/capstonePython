@@ -3,10 +3,11 @@ from helpers.GetRawData import get_gas_data, get_electricity_data, get_oil_data,
 import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
-import plotly.figure_factory as ff
+import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 from model.dataset.FullDataset import min_max_data, build_target
+from model.features.Correltaion import drop_high_vif
 from model.features.FeaturesPctChange import percent_change
 
 
@@ -217,7 +218,7 @@ def std_plot():
     return plot
 
 
-def std_box_plots():
+def std_corr_map():
     x = min_max_data()
     y = build_target()
     df = x
@@ -225,6 +226,44 @@ def std_box_plots():
     target = df.pop('USREC')
     df.insert(0, 'USREC', target)
     fig, ax = plt.subplots()
-    sns.heatmap(x.corr(), ax=ax)
+    # Create mask to remove lower triangle of heat map
+    mask = np.triu(np.ones_like(x.corr(), dtype=bool))
+    sns.heatmap(x.corr(),
+                ax=ax,
+                mask=mask,
+                vmin=-1,
+                vmax=1)
+    plot = st.write(fig)
+    return plot
+
+
+def std_corr_matrix():
+    x = min_max_data()
+    y = build_target()
+    df = x
+    df = df.join(y)
+    target = df.pop('USREC')
+    df.insert(0, 'USREC', target)
+    corr_matrix = df.corr()
+    round(corr_matrix, 2)
+    matrix = st.write(corr_matrix)
+    return matrix
+
+
+def std_corr_map_after():
+    x = drop_high_vif()
+    y = build_target()
+    df = x
+    df = df.join(y)
+    target = df.pop('USREC')
+    df.insert(0, 'USREC', target)
+    fig, ax = plt.subplots()
+    # Create mask to remove lower triangle of heat map
+    mask = np.triu(np.ones_like(x.corr(), dtype=bool))
+    sns.heatmap(x.corr(),
+                ax=ax,
+                mask=mask,
+                vmin=-1,
+                vmax=1)
     plot = st.write(fig)
     return plot
