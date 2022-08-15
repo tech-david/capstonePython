@@ -1,4 +1,6 @@
 import streamlit as st
+
+from helpers.PlotVisuals import model_ready_plot
 from model.features.Correltaion import complete_df
 
 st.set_page_config(page_title="Full dataset",
@@ -13,3 +15,5 @@ st.markdown("""
             """)
 st.subheader("Dataset")
 st.write(complete_df())
+st.subheader("Features and target graphs")
+model_ready_plot()

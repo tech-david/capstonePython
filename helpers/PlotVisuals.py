@@ -7,7 +7,7 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 from model.dataset.FullDataset import min_max_data, build_target
-from model.features.Correltaion import drop_high_vif
+from model.features.Correltaion import drop_high_vif, complete_df
 from model.features.FeaturesPctChange import percent_change
 
 
@@ -266,4 +266,19 @@ def std_corr_map_after():
                 vmin=-1,
                 vmax=1)
     plot = st.write(fig)
+    return plot
+
+
+def model_ready_plot():
+    df = complete_df()
+    options = st.selectbox(label="Select feature",
+                           options=df.columns[df.columns != 'USREC'])
+    fig = px.area(data_frame=df,
+                  x=df.index,
+                  y=options,
+                  line_group='USREC',
+                  color='USREC',
+                  title=options + ' price data and recession')
+    plot = st.plotly_chart(fig,
+                           use_container_width=True)
     return plot
