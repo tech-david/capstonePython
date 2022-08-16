@@ -2,7 +2,7 @@ from statsmodels.stats.outliers_influence import variance_inflation_factor
 import pandas as pd
 import streamlit as st
 from model.dataset.FullDataset import min_max_data, build_target
-from model.features.Correltaion import drop_high_vif
+from model.features.Preparation import drop_high_vif
 
 
 # compute the vif for all given features

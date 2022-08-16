@@ -1,7 +1,7 @@
 import streamlit as st
 
 from helpers.PlotVisuals import model_ready_plot
-from model.features.Correltaion import complete_df
+from model.features.Preparation import complete_df
 
 st.set_page_config(page_title="Full dataset",
                    layout="wide")

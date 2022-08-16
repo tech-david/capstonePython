@@ -1,7 +1,7 @@
 from helpers.Cleaner import fill_gas_na, fill_electricity_na, fill_oil_na, resample_house
 from pandas_profiling import ProfileReport
 
-from model.features.Correltaion import complete_df
+from model.features.Preparation import complete_df
 from model.features.FeaturesPctChange import percent_change
 
 

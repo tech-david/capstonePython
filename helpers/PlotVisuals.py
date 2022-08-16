@@ -7,7 +7,8 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 from model.dataset.FullDataset import min_max_data, build_target
-from model.features.Correltaion import drop_high_vif, complete_df
+from model.dataset.TrainTestData import train_test_split_business_cycle
+from model.features.Preparation import drop_high_vif, complete_df
 from model.features.FeaturesPctChange import percent_change
 
 
@@ -279,6 +280,22 @@ def model_ready_plot():
                   line_group='USREC',
                   color='USREC',
                   title=options + ' price data and recession')
+    plot = st.plotly_chart(fig,
+                           use_container_width=True)
+    return plot
+
+
+def split_plot():
+    x_train, x_test, y_train, y_test = train_test_split_business_cycle()
+    fig = go.Figure()
+    options = st.selectbox('Select Feature',
+                           options=x_train.columns.tolist())
+    fig.add_trace(go.Scatter(x=x_train.index,
+                             y=x_train[options],
+                             name=options))
+    fig.add_trace(go.Scatter(x=x_test.index,
+                             y=x_test[options],
+                             name=options))
     plot = st.plotly_chart(fig,
                            use_container_width=True)
     return plot

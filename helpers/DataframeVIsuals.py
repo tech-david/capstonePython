@@ -3,6 +3,7 @@ from helpers.GetRawData import get_gas_data, get_electricity_data, get_oil_data
 import streamlit as st
 
 from model.dataset.FullDataset import min_max_data
+from model.dataset.TrainTestData import train_test_split_business_cycle
 from model.features.FeaturesPctChange import percent_change
 
 
@@ -137,3 +138,15 @@ def std_features():
                                     default_cols)
     filtered_df = st.dataframe(df[select_options])
     return filtered_df
+
+
+def split_dataframes():
+    x_train, x_test, y_train, y_test = train_test_split_business_cycle()
+    df_train = x_train.join(y_train, how='outer')
+    df_test = x_test.join(y_test, how='outer')
+    split_container = st.container()
+    split_container.subheader("Train dataset")
+    split_container.dataframe(df_train)
+    split_container.subheader("Test dataset")
+    split_container.dataframe(df_test)
+    return split_container

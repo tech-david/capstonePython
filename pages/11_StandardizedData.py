@@ -3,7 +3,7 @@ import streamlit as st
 from helpers.DataframeVIsuals import std_features
 from helpers.PlotVisuals import std_plot, std_corr_map, std_corr_matrix, std_corr_map_after
 from model.dataset.FullDataset import describe_std_data
-from model.features.Correltaion import drop_high_vif
+from model.features.Preparation import drop_high_vif
 from model.reports.Metrics import calculate_vif, calculate_vif_after
 
 st.set_page_config(page_title="Percentages Standardized",
