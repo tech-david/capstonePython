@@ -1,5 +1,7 @@
 from helpers.Cleaner import fill_gas_na, fill_electricity_na, fill_oil_na, resample_house
 from pandas_profiling import ProfileReport
+
+from model.features.Correltaion import complete_df
 from model.features.FeaturesPctChange import percent_change
 
 
@@ -202,5 +204,44 @@ def create_features_profile():
                                             "Average Sales Price": "Average price of homes sold in $",
                                             "Median Sales Price": "Median price of homes sold in $"
                                         }
+                                    })
+    return feature_profile
+
+
+def create_model_data_profile():
+    df = complete_df()
+    feature_profile = ProfileReport(df,
+                                    title="Model ready data",
+                                    dataset={
+                                        "description": "Data after feature prices changes have been calculated,"
+                                                       " results standardized, and multicollinearity risk features"
+                                                       " dropped"
+                                    },
+                                    variables={
+                                        "USREC": "Target variable where 1 represents recession, 0 no recession",
+                                        "Natural Gas Price, Wellhead": "Natural gas price from source",
+                                        "Natural Gas Price, Delivered to Consumers, Residential": "Natural gas price "
+                                                                                                  "when sold to "
+                                                                                                  "residential "
+                                                                                                  "consumers",
+                                        "Average Retail Price of Electricity, Residential": "Price of electricity "
+                                                                                            "given to consumers",
+                                        "Average Retail Price of Electricity, Industrial": "Price of electricity "
+                                                                                           "given to industrial "
+                                                                                           "businesses",
+                                        "Average Retail Price of Electricity, Transportation": "Price of electricity "
+                                                                                               "used for "
+                                                                                               "transportation",
+                                        "Leaded Regular Gasoline, U.S. City Average Retail Price": "Price of leaded "
+                                                                                                   "fuel (fuel used "
+                                                                                                   "pre-1980's)",
+                                        "Unleaded Regular Gasoline, U.S. City Average Retail Price":"Price of "
+                                                                                                    "unleaded fuel ("
+                                                                                                    "fuel used "
+                                                                                                    "post-1980's to "
+                                                                                                    "present",
+                                        "On-Highway Diesel Fuel Price": "Price for diesel fuel, used mainly in "
+                                                                        "transporting goods",
+                                        "Homes Average Sales Price": "Average sales prices for home in US"
                                     })
     return feature_profile

@@ -1,7 +1,8 @@
 import streamlit as st
 from streamlit_pandas_profiling import st_profile_report
 
-from helpers.ReportsWriter import gas_profile, elec_profile, fuel_profile, house_profile, features_profile
+from helpers.ReportsWriter import gas_profile, elec_profile, fuel_profile, house_profile, features_profile, \
+    model_data_profile
 
 
 # Populating data into page using spinner to indicate loading
@@ -38,3 +39,11 @@ def feature_reporting():
         feature_profile = features_profile()
         feature_report = st_profile_report(feature_profile)
         return feature_report
+
+
+def model_data_reporting():
+    with st.spinner(text='Creating model data reports'):
+        feature_profile = model_data_profile()
+        feature_report = st_profile_report(feature_profile)
+        return feature_report
+
