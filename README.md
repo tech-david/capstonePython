@@ -12,7 +12,7 @@
 - streamlit-pandas-profiling 0.1.3
 - sklearn 1.1.2
 - tkinter 8.6.12 (conda install)
-- statsmodel 0.13.2
+- statsmodels 0.13.2
 ## Instructions
 > Once cloned, enter the following command on Powershell/Command line (depending on OS) to run locally 
 - `streamlit run Home.py`
