@@ -22,8 +22,7 @@ st.markdown(
     ### Processed Data Exploration
     - Data that has gone through initial phase of cleaning, which includes interpolation and filling NA with 0 where appropriate.
     ### Reports
-    - Reports generated from datasets that include statistical metrics such as quartiles, mean, median, standard deviation
-    and more.
+    - Reports generated from datasets that include statistical metrics such as quartiles, mean, median, standard deviation and more.
     - Natural Gas
     - Electricity
     - Oil

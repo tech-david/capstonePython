@@ -33,6 +33,5 @@ st.markdown(
     ## To do
     * Integrate upload functionality to upload own data (must be in csv format).
     * Select options for which data to clean.
-      - Currently using interpolation for existing data, using average annual for months missing.
     """
 )

@@ -122,25 +122,18 @@ def display_predictions_plot():
 
 
 def model_equation():
-    equation = model.coef_
-    equation = list(map('{:.3f}%'.format,equation))
-    equation = np.transpose(equation)
-    natural_gas_wellhead = equation[0]
-    natural_gas_resident = equation[1]
-    electricity_resident = equation[2]
-    electricity_industrial = equation[3]
-    electricity_transportation = equation[4]
-    leaded_gas = equation[5]
-    unleaded_gas = equation[6]
-    diesel = equation[7]
-    homes = equation[8]
-    write = st.write(format(natural_gas_wellhead) + " NG Wellhead " +
-                     format(natural_gas_resident) + " NG Residential " +
-                     format(electricity_resident) + " Elec. Residential " +
-                     format(electricity_industrial) + " Elec. Industrial " +
-                     format(electricity_transportation) + " Ele. Transportation " +
-                     format(leaded_gas) + " Leaded fuel " +
-                     format(unleaded_gas) + " Unleaded fuel " +
-                     format(diesel) + " Diesel " +
-                     format(homes) + " Homes")
+    x = model.coef_
+    y = model.intercept_
+    write = st.write("Rec = ",
+                     str(x[:, 0]), "NG Source + ",
+                     str(x[:, 1]), "NG Res + ",
+                     str(x[:, 2]), "Elec Res + ",
+                     str(x[:, 3]), "Elec Ind + ",
+                     str(x[:, 4]), "Elec Trans + ",
+                     str(x[:, 5]), "Leaded Gas+ ",
+                     str(x[:, 6]), "Unleaded Gas + ",
+                     str(x[:, 7]), "Diesel + ",
+                     str(x[:, 8]), "Homes + ",
+                     str(y)
+                     )
     return write
