@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import glob
+import os
 
 
 # Helper file to get raw data
@@ -82,4 +84,52 @@ def get_raw_house_data():
 def get_recession_data():
     df = pd.read_csv('data/USREC.csv',
                      header=[0])
+    return df
+
+
+@st.cache
+def get_cpi_data():
+    # navigate to folder
+    path = 'data/cpi'
+    # get list of files
+    files = glob.glob(path + "/*.csv")
+    # create datasets for files
+    df = pd.DataFrame(columns=['Year', 'Period'])
+    # Create dictionary to reformat months
+    month_dict = {"M01": "1",
+                  "M02": "2",
+                  "M03": "3",
+                  "M04": "4",
+                  "M05": "5",
+                  "M06": "6",
+                  "M07": "7",
+                  "M08": "8",
+                  "M09": "9",
+                  "M10": "10",
+                  "M11": "11",
+                  "M12": "12"}
+    for file in files:
+        # remove first column when reading file
+        file_df = pd.read_csv(file,
+                              usecols=['Year', 'Period', 'Value'],
+                              index_col=None,
+                              header=0)
+        # create name for column based on file name
+        col_name = file.removeprefix(r"data/cpi")
+        col_name = col_name.removesuffix(r".csv")
+        col_name = col_name.replace("\\", "")
+        file_df.rename(columns={'Value': col_name},
+                       inplace=True)
+        # merge data frames together based on year and period
+        df = df.merge(file_df,
+                      how='outer')
+
+    # sort in chronological order
+    df.sort_values(by=['Year', 'Period'],
+                   inplace=True,
+                   ignore_index=True)
+    df.reset_index()
+    # replace month values with dictionary
+    df.replace({'Period': month_dict},
+               inplace=True)
     return df

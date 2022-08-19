@@ -1,5 +1,6 @@
 from helpers.Cleaner import fill_electricity_na, fill_gas_na, fill_oil_na, resample_house
-from helpers.GetRawData import get_gas_data, get_electricity_data, get_oil_data, get_raw_house_data, get_recession_data
+from helpers.GetRawData import get_gas_data, get_electricity_data, get_oil_data, get_raw_house_data, get_recession_data, \
+    get_cpi_data
 import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
@@ -86,6 +87,24 @@ def house_raw_plot():
         xaxis_title='Time',
         yaxis_title='Dollars ($)'
     )
+    plot = st.plotly_chart(fig,
+                           use_container_width=True)
+    return plot
+
+
+def cpi_raw_plot():
+    df = get_cpi_data()
+    col1, col2 = st.columns(2)
+    x_axis = col1.selectbox('Select X-axis',
+                            options=df.columns)
+    y_axis = col2.selectbox('Select Y-axis',
+                            options=df.columns)
+    fig = px.area(df,
+                  x=x_axis,
+                  y=y_axis,
+                  line_group='Period',
+                  color='Period',
+                  title='CPI Monthly Changes for ' + y_axis)
     plot = st.plotly_chart(fig,
                            use_container_width=True)
     return plot

@@ -1,12 +1,13 @@
-import numpy as np
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix, classification_report, roc_curve, roc_auc_score, auc
+
 from model.dataset.TrainTestData import train_test_split_business_cycle
 import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
-import seaborn as sns
+import statsmodels.api as sm
+
 
 x_train, x_test, y_train, y_test = train_test_split_business_cycle()
 model = LogisticRegression()
@@ -44,31 +45,6 @@ def model_roc_curve():
     return fpr, tpr, thresholds
 
 
-# def model_results():
-#     accuracy = model_accuracy()
-#     confusion_report = model_confusion_matrix_report()
-#     classification_view = model_classification()
-#     score = model_roc_auc_score()
-#     fpr, tpr, thresholds = model_roc_curve()
-#     fig, ax = plt.subplots(2, 2)
-#     fig.suptitle("Model Evaluation Results")
-#     ax[0, 0].add_image(confusion_report.plot())
-#     ax[0, 0].set_title("Confusion Matrix")
-#     ax[0, 1].plot(fpr, tpr, label='Logistic Regression (area = %0.2f)' % score)
-#     ax[0, 1].set_title("Receiver Operating Characteristic Curve")
-#     ax[0, 1].plot([0, 1], [0, 1], 'r--')
-#     ax[0, 1].xlim([0.0, 1.0])
-#     ax[0, 1].ylim([0.0, 1.05])
-#     ax[0, 1].xlabel('False Positive Rate')
-#     ax[0, 1].ylabel('True Positive Rate')
-#     ax[1, 0].set_title("Accuracy, Precision, Recall, F1, and Support")
-#     ax[1, 0].plot(accuracy)
-#     ax[1, 0].plot(classification_view)
-#     ax[1, 1].plot(x_train, y_train)
-#     ax[1, 1].plot(x_test, y_pred)
-#     ax[1, 1].scatter(x_test, y_test)
-#     plots = st.pyplot(plt.show())
-#     return plots
 def display_accuracy():
     accuracy = model_accuracy()
     output = st.write('Model Accuracy: {:.2f}'.format(accuracy))
@@ -136,4 +112,10 @@ def model_equation():
                      str(x[:, 8]), "Homes + ",
                      str(y)
                      )
+    return write
+
+
+def model_metrics():
+    sm_log = sm.Logit(y_train, x_train).fit()
+    write = st.write(sm_log.summary())
     return write

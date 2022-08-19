@@ -1,7 +1,8 @@
 import streamlit as st
-from helpers.DataframeVIsuals import gas_raw_dataframe, elec_raw_dataframe, oil_raw_dataframe
+from helpers.DataframeVIsuals import gas_raw_dataframe, elec_raw_dataframe, oil_raw_dataframe, cpi_raw_dataframe
 from helpers.GetRawData import get_raw_house_data, get_recession_data
-from helpers.PlotVisuals import gas_raw_plot, elec_raw_plot, oil_raw_plot, house_raw_plot, recession_raw_plot
+from helpers.PlotVisuals import gas_raw_plot, elec_raw_plot, oil_raw_plot, house_raw_plot, recession_raw_plot, \
+    cpi_raw_plot
 
 st.set_page_config(page_title="Data Exploration",
                    layout="wide")
@@ -54,3 +55,10 @@ st.dataframe(get_recession_data())
 
 st.subheader("Recession Graph")
 recession_raw_plot()
+
+st.header("CPI for various goods 1976-2022")
+st.markdown(">CPI data is in terms of 1 month change")
+st.subheader("CPI Data")
+cpi_raw_dataframe()
+st.subheader("CPI Graph")
+cpi_raw_plot()

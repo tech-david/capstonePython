@@ -1,5 +1,5 @@
 from helpers.Cleaner import fill_electricity_na, fill_gas_na, fill_oil_na
-from helpers.GetRawData import get_gas_data, get_electricity_data, get_oil_data
+from helpers.GetRawData import get_gas_data, get_electricity_data, get_oil_data, get_cpi_data
 import streamlit as st
 
 from model.dataset.FullDataset import min_max_data
@@ -56,6 +56,21 @@ def oil_raw_dataframe():
                                     options,
                                     default_cols)
     filtered_df = st.dataframe(df_oil_data[select_options])
+    return filtered_df
+
+
+def cpi_raw_dataframe():
+    df = get_cpi_data()
+    default_cols = ['Year',
+                    'Period',
+                    'Bread',
+                    'Chicken',
+                    'Milk']
+    options = df.columns.to_list()
+    select_options = st.multiselect("Select Columns to view",
+                                    options,
+                                    default_cols)
+    filtered_df = st.dataframe(df[select_options])
     return filtered_df
 
 
