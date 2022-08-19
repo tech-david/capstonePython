@@ -30,7 +30,8 @@ def model_confusion_matrix_report():
 
 def model_classification():
     report = classification_report(y_test, y_pred)
-    return report
+    table = st.text('Model Report:\n ' + report)
+    return table
 
 
 def model_roc_auc_score():
