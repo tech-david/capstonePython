@@ -1,5 +1,5 @@
 from helpers.ReportBuilder import create_gas_profile, create_elec_profile, create_oil_profile, create_home_profile, \
-    create_features_profile, create_model_data_profile
+    create_features_profile, create_model_data_profile, create_cpi_profile
 
 
 # Saving created reports to folder as an HTML file
@@ -25,6 +25,12 @@ def house_profile():
     home_profile = create_home_profile()
     home_profile.to_file("reports/House_Reports.html")
     return home_profile
+
+
+def write_cpi_profile():
+    profile = create_cpi_profile()
+    profile.to_file("reports/CPI_Reports.html")
+    return profile
 
 
 def features_profile():

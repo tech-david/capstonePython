@@ -1,4 +1,4 @@
-from helpers.Cleaner import fill_gas_na, fill_electricity_na, fill_oil_na, resample_house
+from helpers.Cleaner import fill_gas_na, fill_electricity_na, fill_oil_na, resample_house, fill_cpi_na
 from pandas_profiling import ProfileReport
 
 from model.features.Preparation import complete_df
@@ -126,6 +126,17 @@ def create_home_profile():
                                      }
                                  })
     return home_profile
+
+
+def create_cpi_profile():
+    df = fill_cpi_na()
+    cpi_profile = ProfileReport(df,
+                                title='CPI reports',
+                                minimal=True,
+                                dataset={
+                                    "description": "Reports of monthly change of CPI for commodities"
+                                })
+    return cpi_profile
 
 
 def create_features_profile():
