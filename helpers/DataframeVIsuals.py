@@ -1,4 +1,4 @@
-from helpers.Cleaner import fill_electricity_na, fill_gas_na, fill_oil_na
+from helpers.Cleaner import fill_electricity_na, fill_gas_na, fill_oil_na, fill_cpi_na
 from helpers.GetRawData import get_gas_data, get_electricity_data, get_oil_data, get_cpi_data
 import streamlit as st
 
@@ -124,6 +124,20 @@ def post_processed_oil():
                                     options,
                                     default_cols)
     filtered_df = st.dataframe(df_oil_data_fill_na[select_options])
+    return filtered_df
+
+
+def post_processed_cpi():
+    df = fill_cpi_na()
+    default_cols = ['Year',
+                    'Bread',
+                    'Chicken',
+                    'Milk']
+    options = df.columns.to_list()
+    select_options = st.multiselect("Select Columns to view",
+                                    options,
+                                    default_cols)
+    filtered_df = st.dataframe(df[select_options])
     return filtered_df
 
 

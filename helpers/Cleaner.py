@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from helpers.GetRawData import get_gas_data, get_electricity_data, get_oil_data, get_raw_house_data
+from helpers.GetRawData import get_gas_data, get_electricity_data, get_oil_data, get_raw_house_data, get_cpi_data
 
 # Data cleaning
 # Dictionary for Month
@@ -136,3 +136,36 @@ def resample_house():
     # Resampling from quarterly to monthly start data, then filling NA with interpolation
     df = df.resample('MS').interpolate(method='linear', limit_direction='backward')
     return df
+
+
+def fill_cpi_na():
+    data = get_cpi_data()
+    # creating new df to avoid cache issues
+    df = data.copy()
+    # create date time index
+    # Creating temporary day column for to_datetime function
+    df['Day'] = np.ones((len(df.index), 1))
+    # renaming period to month for to_datetime function
+    df.rename(columns={'Period': 'Month'},
+              inplace=True)
+    # Creating date column from existing dates
+    df['Date'] = pd.to_datetime(df[['Year', 'Month', 'Day']])
+    df.index = df['Date']
+    # Upsample to daily records
+    # Creating daily records from current table
+    daily_dates = pd.date_range(df.index.min(), df.index.max(), freq='D')
+    # reindexing table with new dates
+    df_daily = df.reindex(daily_dates)
+    df_daily['Date'] = daily_dates
+    # Dropping columns to allow for Pandas bug when interpolating
+    df_daily.drop(columns=['Day', 'Date'],
+                  inplace=True)
+    df_daily.interpolate(method='time',
+                         inplace=True,
+                         limit_direction='both')
+    # Downsample back to monthly data using mean of days in month
+    df_month = df_daily.resample("MS").mean()
+    # Converting year from float to int
+    df_month['Year'] = df_month['Year'].astype(int)
+
+    return df_month
