@@ -64,7 +64,7 @@ def cpi_raw_dataframe():
     default_cols = ['Year',
                     'Period',
                     'Bread',
-                    'Chicken',
+                    'Chicken_Whole',
                     'Milk']
     options = df.columns.to_list()
     select_options = st.multiselect("Select Columns to view",
@@ -131,7 +131,7 @@ def post_processed_cpi():
     df = fill_cpi_na()
     default_cols = ['Year',
                     'Bread',
-                    'Chicken',
+                    'Chicken_Whole',
                     'Milk']
     options = df.columns.to_list()
     select_options = st.multiselect("Select Columns to view",
