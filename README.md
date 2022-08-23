@@ -21,6 +21,4 @@
 - Connect to S3 bucket using boto3
 - Integrate upload functionality
 - Data cleaning options
-- Model creation
-- Model visualizations and reports
 

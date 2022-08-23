@@ -57,7 +57,6 @@ st.subheader("Recession Graph")
 recession_raw_plot()
 
 st.header("CPI for various goods 1976-2022")
-st.markdown(">CPI data is in terms of 1 month change")
 st.subheader("CPI Data")
 cpi_raw_dataframe()
 st.subheader("CPI Graph")

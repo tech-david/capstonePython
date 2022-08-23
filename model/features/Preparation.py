@@ -14,7 +14,11 @@ def drop_high_vif():
                      "Regular Motor Gasoline, Conventional Gasoline Areas, Retail Price",
                      "Regular Motor Gasoline, Reformulated Gasoline Areas, Retail Price",
                      "Regular Motor Gasoline, All Areas, Retail Price",
-                     "Homes Median Sales Price"],
+                     "Homes Median Sales Price",
+                     "Gasoline_all",
+                     "Unleaded Regular Gasoline, U.S. City Average Retail Price",
+                     "Leaded Regular Gasoline, U.S. City Average Retail Price",
+                     "Beef_Ground_Chuck"],
             inplace=True)
     return df
 
@@ -26,9 +30,6 @@ def complete_df():
     df = df.join(y)
     target = df.pop('USREC')
     df.insert(0, 'USREC', target)
-    # Filling leaded gasoline data with 0s
-    df['Leaded Regular Gasoline, U.S. City Average Retail Price'].fillna(0,
-                                                                         inplace=True)
     # df.index = pd.to_datetime(df.index)
     # Fill remaining NaN using interpolation
     df.interpolate(method='time',
