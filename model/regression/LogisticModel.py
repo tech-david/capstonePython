@@ -98,22 +98,22 @@ def display_predictions_plot():
     return plot
 
 
-def model_equation():
-    x = model.coef_
-    y = model.intercept_
-    write = st.write("Rec = ",
-                     str(x[:, 0]), "NG Source + ",
-                     str(x[:, 1]), "NG Res + ",
-                     str(x[:, 2]), "Elec Res + ",
-                     str(x[:, 3]), "Elec Ind + ",
-                     str(x[:, 4]), "Elec Trans + ",
-                     str(x[:, 5]), "Leaded Gas+ ",
-                     str(x[:, 6]), "Unleaded Gas + ",
-                     str(x[:, 7]), "Diesel + ",
-                     str(x[:, 8]), "Homes + ",
-                     str(y)
-                     )
-    return write
+# def model_equation():
+#     x = model.coef_
+#     y = model.intercept_
+#     write = st.write("Rec = ",
+#                      str(x[:, 0]), "NG Source + ",
+#                      str(x[:, 1]), "NG Res + ",
+#                      str(x[:, 2]), "Elec Res + ",
+#                      str(x[:, 3]), "Elec Ind + ",
+#                      str(x[:, 4]), "Elec Trans + ",
+#                      str(x[:, 5]), "Leaded Gas+ ",
+#                      str(x[:, 6]), "Unleaded Gas + ",
+#                      str(x[:, 7]), "Diesel + ",
+#                      str(x[:, 8]), "Homes + ",
+#                      str(y)
+#                      )
+#     return write
 
 
 def model_metrics():

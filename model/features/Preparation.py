@@ -3,6 +3,7 @@ from model.dataset.FullDataset import min_max_data, build_target
 
 def drop_high_vif():
     df = min_max_data()
+    # Dropping these columns due to high vif
     df.drop(columns=["Natural Gas Price, Citygate",
                      "Natural Gas Price, Delivered to Consumers, Commercial",
                      "Natural Gas Price, Delivered to Consumers, Industrial",
@@ -19,6 +20,47 @@ def drop_high_vif():
                      "Unleaded Regular Gasoline, U.S. City Average Retail Price",
                      "Leaded Regular Gasoline, U.S. City Average Retail Price",
                      "Beef_Ground_Chuck"],
+            inplace=True)
+    # Dropping these columns due to high P-values
+    df.drop(columns=["Natural Gas Price, Wellhead",
+                     "Average Retail Price of Electricity, Residential",
+                     "Bread",
+                     "Chicken_Legs",
+                     "IceCream",
+                     "Pears",
+                     "Average Retail Price of Electricity, Industrial",
+                     "On-Highway Diesel Fuel Price",
+                     "Homes Average Sales Price",
+                     "Bananas",
+                     "Beef_Round_Roast",
+                     "Bread_French",
+                     "Bread_Whole_Wheat",
+                     "Chicken_Whole",
+                     "Cookies",
+                     "Eggs",
+                     "Flour",
+                     "Frankfurters",
+                     "Grapes_Seedless",
+                     "Lemons",
+                     "Peaches",
+                     "Pork_Chops",
+                     "Strawberries",
+                     "Utility_gas",
+                     "Natural Gas Price, Delivered to Consumers, Residential",
+                     "Average Retail Price of Electricity, Transportation",
+                     "Beef_Steak_Round",
+                     "Bologna",
+                     "Cheese_Cheddar",
+                     "Electricity",
+                     "Lettuce_Iceberg",
+                     "Peppers_Sweet",
+                     "Rice",
+                     "Spaghetti_and_Macaroni",
+                     "Tomatoes",
+                     "Turkey",
+                     "Bacon",
+                     "Potatoes_White",
+                     "Apples"],
             inplace=True)
     return df
 
