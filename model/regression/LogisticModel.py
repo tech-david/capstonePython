@@ -4,14 +4,13 @@ from sklearn.metrics import confusion_matrix, classification_report, roc_curve, 
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import TimeSeriesSplit
 from sklearn.metrics import make_scorer
+from sklearn.feature_selection import SelectFromModel
 
 from model.dataset.TrainTestData import train_test_split_business_cycle
 import streamlit as st
 import plotly.express as px
-import plotly.graph_objects as go
 import statsmodels.api as sm
 
-from model.features.Preparation import complete_df
 from helpers.Metrics import rmse, regression_results
 
 # Get Split Data
@@ -27,16 +26,8 @@ param_map = {
     "solver": ['liblinear', 'lbfgs'],
     "max_iter": [100, 200],
     "warm_start": [False, True]
-
 }
-# Get complete data
-df = complete_df()
-# Isolate target
-y = df['USREC']
-# Isolate features
-x = df.drop(columns=['USREC'],
-            axis=1)
-# Grid search to test all models based on hyper parameters
+# Grid search to test all models based on hyperparameters
 gsearch = GridSearchCV(estimator=model,
                        cv=tscv,
                        param_grid=param_map,
@@ -153,3 +144,17 @@ def return_pred():
 def return_test():
     test = y_test
     return test
+
+
+def best_features():
+    features = SelectFromModel(gsearch.best_estimator_)
+    features.fit(x_train, y_train)
+    feature_idx = features.get_support()
+    df_feature_idx = pd.DataFrame(feature_idx,
+                                  columns=['Best?'],
+                                  dtype=bool)
+    df_features = pd.DataFrame(gsearch.feature_names_in_,
+                               columns=['Feature'])
+    df_best_features = pd.concat([df_features, df_feature_idx], axis=1)
+    feature_name = st.write(df_best_features)
+    return feature_name
