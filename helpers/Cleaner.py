@@ -20,16 +20,16 @@ month_dict = {"January": 1,
 
 def resample_gas():
     # Copy gas data to start cleaning
-    df_gas_data_fill_na = get_gas_data()
+    df = get_gas_data()
     # Replacing month strings with dictionary
-    df_gas_data_fill_na = df_gas_data_fill_na.replace({'Month': month_dict})
+    df = df.replace({'Month': month_dict})
     # Creating datetime index for resample
-    df_gas_data_fill_na['Day'] = np.ones((552, 1))
-    df_gas_data_fill_na['Day'] = df_gas_data_fill_na['Day'].fillna('1')
-    df_gas_data_fill_na['Date'] = pd.to_datetime(df_gas_data_fill_na[['Year', 'Month', 'Day']])
-    df_gas_data_fill_na.index = df_gas_data_fill_na['Date']
-    df_gas_data_fill_na = pd.DataFrame(df_gas_data_fill_na,
-                                       index=df_gas_data_fill_na['Date'])
+    df['Day'] = np.ones((len(df.index), 1))
+    df['Day'] = df['Day'].fillna('1')
+    df['Date'] = pd.to_datetime(df[['Year', 'Month', 'Day']])
+    df.index = df['Date']
+    df_gas_data_fill_na = pd.DataFrame(df,
+                                       index=df['Date'])
     # Dropping columns not related to price (Transportation all NA)
     df_gas_data_fill_na = df_gas_data_fill_na.drop(
         columns=['Percentage of Residential Sector Consumption for Which Price Data Are Available',
@@ -66,16 +66,16 @@ def fill_gas_na():
 
 def resample_elec():
     # Copy electricity data to start cleaning
-    df_electricity_data_fill_na = get_electricity_data()
+    df = get_electricity_data()
     # Replacing month strings with dictionary
-    df_electricity_data_fill_na = df_electricity_data_fill_na.replace({'Month': month_dict})
+    df = df.replace({'Month': month_dict})
     # Creating datetime index for resample
-    df_electricity_data_fill_na['Day'] = np.ones((552, 1))
-    df_electricity_data_fill_na['Day'] = df_electricity_data_fill_na['Day'].fillna('1')
-    df_electricity_data_fill_na['Date'] = pd.to_datetime(df_electricity_data_fill_na[['Year', 'Month', 'Day']])
-    df_electricity_data_fill_na.index = df_electricity_data_fill_na['Date']
-    df_electricity_data_fill_na = pd.DataFrame(df_electricity_data_fill_na,
-                                               index=df_electricity_data_fill_na['Date'])
+    df['Day'] = np.ones((len(df.index), 1))
+    df['Day'] = df['Day'].fillna('1')
+    df['Date'] = pd.to_datetime(df[['Year', 'Month', 'Day']])
+    df.index = df['Date']
+    df_electricity_data_fill_na = pd.DataFrame(df,
+                                               index=df['Date'])
     # Dropping 'Other' Category
     df_electricity_data_fill_na = df_electricity_data_fill_na.drop(
         columns=['Average Retail Price of Electricity, Other'])
@@ -102,16 +102,16 @@ def fill_electricity_na():
 
 def resample_oil():
     # Copy oil data to start cleaning
-    df_oil_data_fill_na = get_oil_data()
+    df = get_oil_data()
     # Replacing month strings with dictionary
-    df_oil_data_fill_na = df_oil_data_fill_na.replace({'Month': month_dict})
+    df = df.replace({'Month': month_dict})
     # Creating datetime index for resample
-    df_oil_data_fill_na['Day'] = np.ones((590, 1))
-    df_oil_data_fill_na['Day'] = df_oil_data_fill_na['Day'].fillna('1')
-    df_oil_data_fill_na['Date'] = pd.to_datetime(df_oil_data_fill_na[['Year', 'Month', 'Day']])
-    df_oil_data_fill_na.index = df_oil_data_fill_na['Date']
-    df_oil_data_fill_na = pd.DataFrame(df_oil_data_fill_na,
-                                       index=df_oil_data_fill_na['Date'])
+    df['Day'] = np.ones((len(df.index), 1))
+    df['Day'] = df['Day'].fillna('1')
+    df['Date'] = pd.to_datetime(df[['Year', 'Month', 'Day']])
+    df.index = df['Date']
+    df_oil_data_fill_na = pd.DataFrame(df,
+                                       index=df['Date'])
     # Converting years from strings to integers for help method
     df_oil_data_fill_na['Year'] = df_oil_data_fill_na['Year'].astype(int)
     return df_oil_data_fill_na
