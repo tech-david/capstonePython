@@ -1,6 +1,9 @@
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix, classification_report, roc_curve, roc_auc_score, auc
+from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import TimeSeriesSplit
+from sklearn.metrics import make_scorer
 
 from model.dataset.TrainTestData import train_test_split_business_cycle
 import streamlit as st
@@ -8,12 +11,57 @@ import plotly.express as px
 import plotly.graph_objects as go
 import statsmodels.api as sm
 
+from model.features.Preparation import complete_df
+from helpers.Metrics import rmse, regression_results
 
 x_train, x_test, y_train, y_test = train_test_split_business_cycle()
+tscv = TimeSeriesSplit(n_splits=9)
 model = LogisticRegression()
+rmse_score = make_scorer(rmse, greater_is_better=True)
+param_map = {
+    "solver": ['liblinear', 'lbfgs'],
+    "max_iter": [100, 200],
+    "warm_start": [False, True]
+
+}
+tscv_2 = TimeSeriesSplit(max_train_size=12,
+                         n_splits=10,
+                         gap=12)
+df = complete_df()
+y = df['USREC']
+x = df.drop(columns=['USREC'],
+            axis=1)
+gsearch_2 = GridSearchCV(estimator=model,
+                         cv=tscv_2,
+                         param_grid=param_map,
+                         scoring=rmse_score)
+gsearch_2.fit(x, y)
 log_reg = model.fit(x_train, y_train)
 y_pred = model.predict(x_test)
 y_score = model.predict_proba(x_test)[:, 1]
+gsearch = GridSearchCV(estimator=model,
+                       cv=tscv,
+                       param_grid=param_map,
+                       scoring=rmse_score)
+gsearch.fit(x_train, y_train)
+
+
+def best_score_after_tscv():
+    best_score = gsearch.best_score_
+    return best_score
+
+
+def what_best_model():
+    best_model = gsearch.best_estimator_
+    return best_model
+
+
+def results_after_tscv():
+    best_model = gsearch.best_estimator_
+    y_true = y_test.values
+    y_best = best_model.predict(x_test)
+    results = regression_results(y_true, y_best)
+    return results
 
 
 def model_accuracy():
@@ -22,8 +70,11 @@ def model_accuracy():
 
 
 def model_confusion_matrix_report():
-    report = confusion_matrix(y_test,
-                              y_pred,
+    best_model = gsearch_2.best_estimator_
+    y_true = y_test.values
+    y_best = best_model.predict(x_test)
+    report = confusion_matrix(y_true,
+                              y_best,
                               labels=model.classes_)
     return report
 
@@ -120,3 +171,13 @@ def model_metrics():
     sm_log = sm.Logit(y_train, x_train).fit()
     write = st.write(sm_log.summary())
     return write
+
+
+def return_pred():
+    predictions = y_pred
+    return predictions
+
+
+def return_test():
+    test = y_test
+    return test
