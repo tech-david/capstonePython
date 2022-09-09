@@ -2,7 +2,7 @@ import streamlit as st
 
 st.set_page_config(page_title="Model results",
                    layout="wide")
-from model.regression.LogisticModel import display_accuracy, display_scores, display_roc_auc,  \
+from model.regression.LogisticModel import display_accuracy, display_scores, display_roc_auc, \
     model_metrics, model_classification
 
 st.header("Logistic Regression Model and Results")

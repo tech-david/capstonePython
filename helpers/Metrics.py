@@ -4,7 +4,7 @@ import pandas as pd
 import streamlit as st
 import sklearn.metrics as metrics
 from model.dataset.FullDataset import min_max_data, build_target
-from model.features.Preparation import drop_high_vif
+from model.features.Preparation import get_best
 
 
 # compute the vif for all given features
@@ -36,7 +36,7 @@ def calculate_vif():
 
 def calculate_vif_after():
     # the independent variables set
-    x = drop_high_vif()
+    x = get_best()
     # target dummy
     y = build_target()
     x.fillna(value=0,
