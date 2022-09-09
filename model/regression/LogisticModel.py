@@ -14,31 +14,29 @@ import statsmodels.api as sm
 from model.features.Preparation import complete_df
 from helpers.Metrics import rmse, regression_results
 
+# Get Split Data
 x_train, x_test, y_train, y_test = train_test_split_business_cycle()
+# Create Cross Validation
 tscv = TimeSeriesSplit(n_splits=9)
+# Initiate Model
 model = LogisticRegression()
+# Create scorer
 rmse_score = make_scorer(rmse, greater_is_better=True)
+# Create parameter map for grid model comparison
 param_map = {
     "solver": ['liblinear', 'lbfgs'],
     "max_iter": [100, 200],
     "warm_start": [False, True]
 
 }
-tscv_2 = TimeSeriesSplit(max_train_size=12,
-                         n_splits=10,
-                         gap=12)
+# Get complete data
 df = complete_df()
+# Isolate target
 y = df['USREC']
+# Isolate features
 x = df.drop(columns=['USREC'],
             axis=1)
-gsearch_2 = GridSearchCV(estimator=model,
-                         cv=tscv_2,
-                         param_grid=param_map,
-                         scoring=rmse_score)
-gsearch_2.fit(x, y)
-log_reg = model.fit(x_train, y_train)
-y_pred = model.predict(x_test)
-y_score = model.predict_proba(x_test)[:, 1]
+# Grid search to test all models based on hyper parameters
 gsearch = GridSearchCV(estimator=model,
                        cv=tscv,
                        param_grid=param_map,
@@ -65,35 +63,40 @@ def results_after_tscv():
 
 
 def model_accuracy():
-    accuracy = model.score(x_test, y_test)
+    best_model = what_best_model()
+    accuracy = best_model.score(x_test, y_test)
     return accuracy
 
 
 def model_confusion_matrix_report():
-    best_model = gsearch_2.best_estimator_
+    best_model = gsearch.best_estimator_
     y_true = y_test.values
     y_best = best_model.predict(x_test)
     report = confusion_matrix(y_true,
                               y_best,
-                              labels=model.classes_)
+                              labels=best_model.classes_)
     return report
 
 
 def model_classification():
+    best_model = what_best_model()
+    y_pred = best_model.predict(x_test)
     report = classification_report(y_test, y_pred)
     table = st.text('Model Report:\n ' + report)
     return table
 
 
 def model_roc_auc_score():
+    best_model = gsearch.best_estimator_
     score = roc_auc_score(y_test,
-                          model.predict(x_test))
+                          best_model.predict(x_test))
     return score
 
 
 def model_roc_curve():
+    y_best_model = gsearch.best_estimator_.predict_proba(x_test)[:, 1]
     fpr, tpr, thresholds = roc_curve(y_test,
-                                     y_score)
+                                     y_best_model)
     return fpr, tpr, thresholds
 
 
@@ -105,10 +108,10 @@ def display_accuracy():
 
 def display_scores():
     report = model_confusion_matrix_report()
-    df = pd.DataFrame(report,
-                      columns=['Actual Positive', 'Actual Negative'],
-                      index=['Predicted Positive', 'Predicted Negative'])
-    plot = st.write(df)
+    matrix_df = pd.DataFrame(report,
+                             columns=['Actual Positive', 'Actual Negative'],
+                             index=['Predicted Positive', 'Predicted Negative'])
+    plot = st.write(matrix_df)
     return plot
 
 
@@ -135,38 +138,6 @@ def display_roc_auc():
     return plot
 
 
-# Todo make display for model
-def display_predictions_plot():
-    fig = go.Figure()
-    fig.add_trace(go.Scatter(x=model.coef_,
-                             y=y_train,
-                             name="Training Data"))
-    fig.update_layout(title='Real vs Predicted Values',
-                      legend_title='Type of data',
-                      xaxis_title='Time')
-    plot = st.plotly_chart(fig,
-                           use_container_width=True)
-    return plot
-
-
-# def model_equation():
-#     x = model.coef_
-#     y = model.intercept_
-#     write = st.write("Rec = ",
-#                      str(x[:, 0]), "NG Source + ",
-#                      str(x[:, 1]), "NG Res + ",
-#                      str(x[:, 2]), "Elec Res + ",
-#                      str(x[:, 3]), "Elec Ind + ",
-#                      str(x[:, 4]), "Elec Trans + ",
-#                      str(x[:, 5]), "Leaded Gas+ ",
-#                      str(x[:, 6]), "Unleaded Gas + ",
-#                      str(x[:, 7]), "Diesel + ",
-#                      str(x[:, 8]), "Homes + ",
-#                      str(y)
-#                      )
-#     return write
-
-
 def model_metrics():
     sm_log = sm.Logit(y_train, x_train).fit()
     write = st.write(sm_log.summary())
@@ -174,7 +145,8 @@ def model_metrics():
 
 
 def return_pred():
-    predictions = y_pred
+    best_model = what_best_model()
+    predictions = best_model.predict(x_test)
     return predictions
 
 
