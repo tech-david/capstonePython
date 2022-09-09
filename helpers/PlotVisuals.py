@@ -9,7 +9,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from model.dataset.FullDataset import min_max_data, build_target
 from model.dataset.TrainTestData import train_test_split_business_cycle
-from model.features.Preparation import drop_high_vif, complete_df
+from model.features.Preparation import complete_df, get_best
 from model.features.FeaturesPctChange import percent_change
 
 
@@ -289,7 +289,7 @@ def std_corr_matrix():
 
 
 def std_corr_map_after():
-    x = drop_high_vif()
+    x = get_best()
     y = build_target()
     df = x
     df = df.join(y)

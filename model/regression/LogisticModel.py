@@ -31,7 +31,8 @@ param_map = {
 gsearch = GridSearchCV(estimator=model,
                        cv=tscv,
                        param_grid=param_map,
-                       scoring=rmse_score)
+                       scoring=rmse_score,
+                       )
 gsearch.fit(x_train, y_train)
 
 

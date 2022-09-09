@@ -18,7 +18,5 @@ with st.container():
 # model_equation()
 st.subheader("Metric results for model")
 model_metrics()
-st.subheader("Features of Best Model")
-best_features()
 st.subheader("F1, Precision, Recall, and Support Metrics")
 model_classification()
