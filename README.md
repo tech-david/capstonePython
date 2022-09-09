@@ -13,6 +13,7 @@
 - sklearn 1.1.2
 - tkinter 8.6.12 (conda install)
 - statsmodels 0.13.2
+- imbalanced-learn 0.9.1
 ## Instructions
 > Once cloned, enter the following command on Powershell/Command line (depending on OS) to run locally 
 - `streamlit run Home.py`

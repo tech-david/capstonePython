@@ -1,11 +1,10 @@
 # Setting paramater for length of testing months
 # Using 66 months, corresponding to typical business cycle after WWII
 from model.features.Preparation import complete_df
-from sklearn.model_selection import TimeSeriesSplit
 
 
 def train_test_split_business_cycle():
-    test_size = 180
+    test_size = 24
     df = complete_df()
     # Splitting features and target
     y = df['USREC']

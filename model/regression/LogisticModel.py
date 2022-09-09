@@ -5,6 +5,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import TimeSeriesSplit
 from sklearn.metrics import make_scorer
 from sklearn.feature_selection import SelectFromModel
+from imblearn.over_sampling import SMOTE
 
 from model.dataset.TrainTestData import train_test_split_business_cycle
 import streamlit as st
@@ -27,13 +28,15 @@ param_map = {
     "max_iter": [100, 200],
     "warm_start": [False, True]
 }
+smote = SMOTE()
+x_smote, y_smote = smote.fit_resample(x_train, y_train)
 # Grid search to test all models based on hyperparameters
 gsearch = GridSearchCV(estimator=model,
                        cv=tscv,
                        param_grid=param_map,
-                       scoring=rmse_score,
+                       scoring='recall',
                        )
-gsearch.fit(x_train, y_train)
+gsearch.fit(x_smote, y_smote)
 
 
 def best_score_after_tscv():
@@ -101,8 +104,8 @@ def display_accuracy():
 def display_scores():
     report = model_confusion_matrix_report()
     matrix_df = pd.DataFrame(report,
-                             columns=['Actual Positive', 'Actual Negative'],
-                             index=['Predicted Positive', 'Predicted Negative'])
+                             columns=['Actual Recession', 'Actual Non-Recession'],
+                             index=['Predicted Recession', 'Predicted Non-Recession'])
     plot = st.write(matrix_df)
     return plot
 
