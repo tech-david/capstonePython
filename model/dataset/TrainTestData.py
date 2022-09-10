@@ -1,5 +1,4 @@
 # Setting paramater for length of testing months
-# Using 66 months, corresponding to typical business cycle after WWII
 from model.features.Preparation import complete_df
 
 
