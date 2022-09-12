@@ -1,8 +1,9 @@
 import streamlit as st
-from helpers.ReportsView import model_data_reporting
-
 st.set_page_config(page_title="Data Reports (Model ready data)",
                    layout="wide")
+from helpers.ReportsView import model_data_reporting
+
+
 st.title("Reports for data being used in model")
 st.markdown("> Resource intensive page, please allow time for processing")
 st.markdown("> Can download once process is completed")

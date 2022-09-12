@@ -1,13 +1,13 @@
 import streamlit as st
-
+st.set_page_config(page_title="Data Exploration After Cleaning",
+                   layout="wide")
 from helpers.Cleaner import resample_house
 from helpers.DataframeVIsuals import post_processed_gas, post_processed_elec, post_processed_oil, post_processed_cpi
 from helpers.GetRawData import get_recession_data
 from helpers.PlotVisuals import gas_clean_plot, elec_clean_plot, oil_clean_plot, house_clean_plot, recession_raw_plot, \
     cpi_clean_plot
 
-st.set_page_config(page_title="Data Exploration After Cleaning",
-                   layout="wide")
+
 st.title("Economic Recessions Using Commodities")
 st.markdown("Predicting recessions using common consumer commodities")
 st.write(

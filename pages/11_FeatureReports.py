@@ -1,8 +1,9 @@
 import streamlit as st
-from helpers.ReportsView import feature_reporting
-
 st.set_page_config(page_title="Data Reports (All Features)",
                    layout="wide")
+from helpers.ReportsView import feature_reporting
+
+
 st.title("Reports for datasets after cleaning")
 st.markdown("> Resource intensive page, please allow time for processing")
 st.markdown("> Can download once process is completed")

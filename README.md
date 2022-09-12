@@ -14,12 +14,11 @@
 - tkinter 8.6.12 (conda install)
 - statsmodels 0.13.2
 - imbalanced-learn 0.9.1
+- boto3 1.24.70
 ## Instructions
+> Application connects to AWS S3 bucket, access and secret keys are needed
+- For security reasons, the keys are set as environment variables and not included in code base
 > Once cloned, enter the following command on Powershell/Command line (depending on OS) to run locally 
 - `streamlit run Home.py`
-## To-Dos
-> In order of priority
-- Connect to S3 bucket using boto3
-- Integrate upload functionality
-- Data cleaning options
+
 

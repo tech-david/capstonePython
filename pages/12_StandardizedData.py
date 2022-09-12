@@ -1,4 +1,6 @@
 import streamlit as st
+st.set_page_config(page_title="Percentages Standardized",
+                   layout='wide')
 
 from helpers.DataframeVIsuals import std_features
 from helpers.PlotVisuals import std_plot, std_corr_map, std_corr_matrix, std_corr_map_after
@@ -7,8 +9,7 @@ from model.features.Preparation import get_best
 from helpers.Metrics import calculate_vif, calculate_vif_after
 from model.regression.LogisticModel import best_features
 
-st.set_page_config(page_title="Percentages Standardized",
-                   layout='wide')
+
 st.header("Price changes standardized")
 st.subheader("Price Change Data")
 std_features()
@@ -31,4 +32,3 @@ st.subheader("VIF after")
 calculate_vif_after()
 st.subheader("Correlation heatmap after drop")
 std_corr_map_after()
-

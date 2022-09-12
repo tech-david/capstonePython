@@ -1,9 +1,9 @@
 import streamlit as st
+st.set_page_config(page_title="Data Reports (Home Prices)",
+                   layout="wide")
 from helpers.ReportsView import home_reporting
 
 
-st.set_page_config(page_title="Data Reports (Home Prices)",
-                   layout="wide")
 st.title("Reports for datasets after cleaning")
 st.markdown("> Resource intensive page, please allow time for processing")
 st.markdown("> Can download once process is completed")

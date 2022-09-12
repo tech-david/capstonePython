@@ -1,10 +1,10 @@
 import streamlit as st
-
+st.set_page_config(page_title="Full dataset",
+                   layout="wide")
 from helpers.PlotVisuals import model_ready_plot
 from model.features.Preparation import complete_df
 
-st.set_page_config(page_title="Full dataset",
-                   layout="wide")
+
 st.title("Dataset that will be used in model")
 st.markdown(">Data mutation events")
 st.markdown("""

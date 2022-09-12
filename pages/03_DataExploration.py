@@ -1,11 +1,12 @@
 import streamlit as st
+st.set_page_config(page_title="Data Exploration",
+                   layout="wide")
 from helpers.DataframeVIsuals import gas_raw_dataframe, elec_raw_dataframe, oil_raw_dataframe, cpi_raw_dataframe
 from helpers.GetRawData import get_raw_house_data, get_recession_data
 from helpers.PlotVisuals import gas_raw_plot, elec_raw_plot, oil_raw_plot, house_raw_plot, recession_raw_plot, \
     cpi_raw_plot
 
-st.set_page_config(page_title="Data Exploration",
-                   layout="wide")
+
 st.title("Economic Recessions Using Commodities")
 st.markdown("Predicting recessions using common consumer commodities")
 st.write(
