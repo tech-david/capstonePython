@@ -28,6 +28,7 @@ param_map = {
     "max_iter": [100, 200],
     "warm_start": [False, True]
 }
+# Over sampling using SMOTE
 smote = SMOTE()
 x_smote, y_smote = smote.fit_resample(x_train, y_train)
 # Grid search to test all models based on hyperparameters
@@ -39,11 +40,13 @@ gsearch = GridSearchCV(estimator=model,
 gsearch.fit(x_smote, y_smote)
 
 
+# Getting best score from grid search
 def best_score_after_tscv():
     best_score = gsearch.best_score_
     return best_score
 
 
+# Getting best model from grid search
 def what_best_model():
     best_model = gsearch.best_estimator_
     return best_model
@@ -57,12 +60,14 @@ def results_after_tscv():
     return results
 
 
+# Getting accuracy score from best model
 def model_accuracy():
     best_model = what_best_model()
     accuracy = best_model.score(x_test, y_test)
     return accuracy
 
 
+# Getting values for confusion matrix
 def model_confusion_matrix_report():
     best_model = gsearch.best_estimator_
     y_true = y_test.values
@@ -73,6 +78,7 @@ def model_confusion_matrix_report():
     return report
 
 
+# Getting f1, recall, precision
 def model_classification():
     best_model = what_best_model()
     y_pred = best_model.predict(x_test)
@@ -81,6 +87,7 @@ def model_classification():
     return table
 
 
+# Getting AUC score for ROC curve
 def model_roc_auc_score():
     best_model = gsearch.best_estimator_
     score = roc_auc_score(y_test,
@@ -88,6 +95,7 @@ def model_roc_auc_score():
     return score
 
 
+# Creating ROC curve for graph
 def model_roc_curve():
     y_best_model = gsearch.best_estimator_.predict_proba(x_test)[:, 1]
     fpr, tpr, thresholds = roc_curve(y_test,
@@ -95,12 +103,14 @@ def model_roc_curve():
     return fpr, tpr, thresholds
 
 
+# Formatting accuracy score
 def display_accuracy():
     accuracy = model_accuracy()
     output = st.write('Model Accuracy: {:.2f}'.format(accuracy))
     return output
 
 
+# Creating confusion matrix
 def display_scores():
     report = model_confusion_matrix_report()
     matrix_df = pd.DataFrame(report,
@@ -110,6 +120,7 @@ def display_scores():
     return plot
 
 
+# Creating ROC-AUC graph
 def display_roc_auc():
     fpr, tpr, threshold = model_roc_curve()
     fig = px.area(x=fpr,
@@ -133,12 +144,6 @@ def display_roc_auc():
     return plot
 
 
-def model_metrics():
-    sm_log = sm.Logit(y_train, x_train).fit()
-    write = st.write(sm_log.summary())
-    return write
-
-
 def return_pred():
     best_model = what_best_model()
     predictions = best_model.predict(x_test)
@@ -150,6 +155,7 @@ def return_test():
     return test
 
 
+# Creating datatable for best features in accordance with coefficient strength
 def best_features():
     features = SelectFromModel(gsearch.best_estimator_)
     features.fit(x_train, y_train)

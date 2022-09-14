@@ -1,8 +1,8 @@
-# Setting paramater for length of testing months
 from model.features.Preparation import complete_df
 
 
 def train_test_split_business_cycle():
+    # Setting parameter for length of testing months
     test_size = 24
     df = complete_df()
     # Splitting features and target

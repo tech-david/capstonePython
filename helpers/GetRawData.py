@@ -43,10 +43,6 @@ def get_electricity_data():
                      header=[0],
                      skiprows=[1],
                      na_values="Not Available")
-    # df_electricity_data = pd.read_csv("data/Table_9.8_Average_Retail_Prices_of_Electricity.csv",
-    #                                   header=[0],
-    #                                   skiprows=[1],
-    #                                   na_values="Not Available")
     cols = df.columns
     # Convert prices to float
     df[cols[1:]] = df[cols[1:]].apply(pd.to_numeric, errors='coerce')
@@ -139,12 +135,16 @@ def get_cpi_data():
                              usecols=['Year', 'Period', 'Value'],
                              index_col=None,
                              header=0)
+        # Creating column names based on CPI item
+        # Get object key and remove prefix
         col_name = obj.key.removeprefix(r"data/cpi/")
+        # Remove file extension
         col_name = col_name.removesuffix(r".csv")
         col_name = col_name.replace("\\", "")
-        print (col_name)
+        # Rename value column to CPI item
         obj_df.rename(columns={'Value': col_name},
                       inplace=True)
+        # Merge with global dataframe
         df = df.merge(obj_df,
                       how='outer')
 

@@ -1,6 +1,7 @@
 import os
 import boto3
 
+# Get secrets
 ACCESS = os.environ.get('AWS_ACCESS_KEY_ID')
 SECRET = os.environ.get('AWS_SECRET_ACCESS_KEY')
 
@@ -12,6 +13,4 @@ def connect():
         aws_access_key_id=ACCESS,
         aws_secret_access_key=SECRET
     )
-    print(ACCESS)
-    print(SECRET)
     return s3

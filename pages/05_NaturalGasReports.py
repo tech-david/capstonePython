@@ -11,7 +11,7 @@ st.markdown("> Download button located at end of report")
 st.subheader("Natural Gas")
 
 natural_gas_report = gas_reporting()
-with open("reports/Natural_Gas_Reports.html", encoding='utf8') as file:
+with open("/home/ec2-user/capstonePython/reports/Natural_Gas_Reports.html", encoding='utf8') as file:
     btn = st.download_button(
         label="Download natural gas report (HTML)",
         data=file,

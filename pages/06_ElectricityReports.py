@@ -11,7 +11,7 @@ st.markdown("> Download button located at end of report")
 st.subheader("Electricity")
 
 electric_report = elec_reporting()
-with open("reports/Electricity_Reports.html", encoding='utf8') as file:
+with open("/home/ec2-user/capstonePython/reports/Electricity_Reports.html", encoding='utf8') as file:
     btn = st.download_button(
         label="Download electricity report (HTML)",
         data=file,

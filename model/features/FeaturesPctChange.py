@@ -8,5 +8,5 @@ def percent_change():
     df = get_all_features()
     df = df.pct_change(periods=1,
                        fill_method='bfill',
-                       freq='MS')
+                       freq='MS')  # MS - Month start
     return df

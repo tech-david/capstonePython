@@ -11,7 +11,7 @@ st.markdown("> Download button located at end of report")
 st.subheader("Model ready data")
 
 home_report = model_data_reporting()
-with open("reports/Model_Data_Report.html", encoding='utf8') as file:
+with open("/home/ec2-user/capstonePython/reports/Model_Data_Report.html", encoding='utf8') as file:
     btn = st.download_button(
         label="Download model data report (HTML)",
         data=file,

@@ -11,7 +11,7 @@ st.markdown("> Download button located at end of report")
 st.subheader("Features in one dataset")
 
 home_report = feature_reporting()
-with open("reports/Features_Report.html", encoding='utf8') as file:
+with open("/home/ec2-user/capstonePython/reports/Features_Report.html", encoding='utf8') as file:
     btn = st.download_button(
         label="Download feature report (HTML)",
         data=file,

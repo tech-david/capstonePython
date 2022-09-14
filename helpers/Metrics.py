@@ -60,6 +60,7 @@ def calculate_vif_after():
     return plot
 
 
+# Creating scorer to use in grid search model selector
 def rmse(actual, predict):
     predict = np.array(predict)
     actual = np.array(actual)
@@ -70,6 +71,7 @@ def rmse(actual, predict):
     return score
 
 
+# Creating results for model evaluation
 def regression_results(y_true, y_pred):
     variance = metrics.explained_variance_score(y_true, y_pred)
     mae = metrics.mean_absolute_error(y_true, y_pred)

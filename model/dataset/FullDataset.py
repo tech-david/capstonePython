@@ -23,6 +23,7 @@ def build_dataset():
     y = build_target()
     df = x
     df = df.join(y)
+    # moving target variable to beginning of dataframe
     target = df.pop('USREC')
     df.insert(0, 'USREC', target)
     return df
