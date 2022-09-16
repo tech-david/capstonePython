@@ -1,4 +1,4 @@
-from model.features.FeaturesAggregator import get_all_features
+from model.features.Aggregator import get_all_features
 import streamlit as st
 
 

@@ -10,7 +10,6 @@ from imblearn.over_sampling import SMOTE
 from model.dataset.TrainTestData import train_test_split_business_cycle
 import streamlit as st
 import plotly.express as px
-import statsmodels.api as sm
 
 from helpers.Metrics import rmse, regression_results
 
@@ -38,6 +37,12 @@ gsearch = GridSearchCV(estimator=model,
                        scoring='recall',
                        )
 gsearch.fit(x_smote, y_smote)
+
+
+# Get results
+def get_cv_results():
+    results = gsearch.cv_results_
+    return results
 
 
 # Getting best score from grid search

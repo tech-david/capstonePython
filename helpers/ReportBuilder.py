@@ -2,7 +2,7 @@ from helpers.Cleaner import fill_gas_na, fill_electricity_na, fill_oil_na, resam
 from pandas_profiling import ProfileReport
 
 from model.features.Preparation import complete_df
-from model.features.FeaturesPctChange import percent_change
+from model.features.PctChange import percent_change
 
 
 # Creating reports, dropping date and day, as API recreates Date

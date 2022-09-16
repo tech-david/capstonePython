@@ -129,7 +129,6 @@ def get_cpi_data():
 
     bucket = s3.Bucket(BUCKET)
     for obj in bucket.objects.filter(Prefix='data/cpi'):
-        print(obj.key)
         file = s3.Bucket(BUCKET).Object(obj.key).get()
         obj_df = pd.read_csv(file['Body'],
                              usecols=['Year', 'Period', 'Value'],

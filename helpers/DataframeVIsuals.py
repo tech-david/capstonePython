@@ -4,7 +4,7 @@ import streamlit as st
 
 from model.dataset.FullDataset import min_max_data
 from model.dataset.TrainTestData import train_test_split_business_cycle
-from model.features.FeaturesPctChange import percent_change
+from model.features.PctChange import percent_change
 
 
 def gas_raw_dataframe():

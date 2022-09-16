@@ -1,7 +1,7 @@
 import pandas as pd
 import streamlit as st
 from helpers.GetRawData import get_recession_data
-from model.features.FeaturesPctChange import percent_change
+from model.features.PctChange import percent_change
 from sklearn.preprocessing import MinMaxScaler as mms
 
 

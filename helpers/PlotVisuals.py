@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from model.dataset.FullDataset import min_max_data, build_target
 from model.dataset.TrainTestData import train_test_split_business_cycle
 from model.features.Preparation import complete_df, get_best
-from model.features.FeaturesPctChange import percent_change
+from model.features.PctChange import percent_change
 
 
 def gas_raw_plot():
