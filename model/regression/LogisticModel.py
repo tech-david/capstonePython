@@ -16,7 +16,7 @@ from helpers.Metrics import rmse, regression_results
 # Get Split Data
 x_train, x_test, y_train, y_test = train_test_split_business_cycle()
 # Create Cross Validation
-tscv = TimeSeriesSplit(n_splits=9)
+tscv = TimeSeriesSplit(n_splits=12)
 # Initiate Model
 model = LogisticRegression()
 # Create scorer

@@ -131,8 +131,8 @@ def fill_oil_na():
 
 def resample_house():
     df = get_raw_house_data()
-    df['observation_date'] = pd.to_datetime(df['observation_date'])
-    df.set_index('observation_date', inplace=True)
+    df['DATE'] = pd.to_datetime(df['DATE'])
+    df.set_index('DATE', inplace=True)
     # Resampling from quarterly to monthly start data, then filling NA with interpolation
     df = df.resample('MS').interpolate(method='linear', limit_direction='backward')
     return df

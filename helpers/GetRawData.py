@@ -90,7 +90,7 @@ def get_median_house_data():
 def get_raw_house_data():
     df1 = get_avg_house_data()
     df2 = get_median_house_data()
-    df2 = df2.drop(columns=['observation_date'])
+    df2 = df2.drop(columns=['DATE'])
     df = pd.concat([df1, df2],
                    axis=1)
     df = df.rename(columns={"ASPUS": "Average Sales Price",

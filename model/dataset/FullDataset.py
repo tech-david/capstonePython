@@ -51,6 +51,9 @@ def min_max_data():
     df = pd.DataFrame(transformation,
                       columns=x.columns.to_list(),
                       index=x.index)
+    df.interpolate(method='time',
+                   limit_direction='both',
+                   inplace=True)
     return df
 
 

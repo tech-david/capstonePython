@@ -1,4 +1,4 @@
-﻿Month,"Natural Gas Price, Wellhead","Natural Gas Price, Citygate","Natural Gas Price, Delivered to Consumers, Residential",Percentage of Residential Sector Consumption for Which Price Data Are Available,"Natural Gas Price, Delivered to Consumers, Commercial",Percentage of Commercial Sector Consumption for Which Price Data Are Available,"Natural Gas Price, Delivered to Consumers, Industrial",Percentage of Industrial Sector Consumption for Which Price Data Are Available,Natural Gas Transportation Sector Price,"Natural Gas Price, Electric Power Sector",Percentage of Electric Power Sector Consumption for Which Price Data Are Available
+Month,"Natural Gas Price, Wellhead","Natural Gas Price, Citygate","Natural Gas Price, Delivered to Consumers, Residential",Percentage of Residential Sector Consumption for Which Price Data Are Available,"Natural Gas Price, Delivered to Consumers, Commercial",Percentage of Commercial Sector Consumption for Which Price Data Are Available,"Natural Gas Price, Delivered to Consumers, Industrial",Percentage of Industrial Sector Consumption for Which Price Data Are Available,Natural Gas Transportation Sector Price,"Natural Gas Price, Electric Power Sector",Percentage of Electric Power Sector Consumption for Which Price Data Are Available
 ,(Dollars per Thousand Cubic Feet),(Dollars per Thousand Cubic Feet),(Dollars per Thousand Cubic Feet),(Percent),(Dollars per Thousand Cubic Feet),(Percent),(Dollars per Thousand Cubic Feet),(Percent),(Dollars per Thousand Cubic Feet),(Dollars per Thousand Cubic Feet),(Percent)
 1976 January,0.54,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available
 1976 February,0.54,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available
@@ -15,9 +15,9 @@
 1977 January,0.67,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available
 1977 February,0.71,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available
 1977 March,0.75,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available
-1977 April,0.77,Not Available,2.35,Not Available,2.04,Not Available,1.5,Not Available,Not Available,1.32,Not Available
+1977 April,0.77,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available
 1977 May,0.77,Not Available,2.35,Not Available,2.04,Not Available,1.5,Not Available,Not Available,1.32,Not Available
-1977 June,0.82,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available
+1977 June,0.82,Not Available,2.35,Not Available,2.04,Not Available,1.5,Not Available,Not Available,1.32,Not Available
 1977 July,0.83,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available
 1977 August,0.82,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available
 1977 September,0.83,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available
@@ -27,9 +27,9 @@
 1978 January,0.87,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available
 1978 February,0.88,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available
 1978 March,0.89,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available
-1978 April,0.88,Not Available,2.56,Not Available,2.23,Not Available,1.7,Not Available,Not Available,1.48,Not Available
+1978 April,0.88,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available
 1978 May,0.91,Not Available,2.56,Not Available,2.23,Not Available,1.7,Not Available,Not Available,1.48,Not Available
-1978 June,0.91,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available
+1978 June,0.91,Not Available,2.56,Not Available,2.23,Not Available,1.7,Not Available,Not Available,1.48,Not Available
 1978 July,0.89,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available
 1978 August,0.91,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available
 1978 September,0.92,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available
@@ -39,9 +39,9 @@
 1979 January,1.02,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,1.55,Not Available
 1979 February,1.05,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,1.65,Not Available
 1979 March,1.1,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,1.69,Not Available
-1979 April,1.11,Not Available,2.98,Not Available,2.73,Not Available,1.99,Not Available,Not Available,1.7,Not Available
+1979 April,1.11,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,1.7,Not Available
 1979 May,1.15,Not Available,2.98,Not Available,2.73,Not Available,1.99,Not Available,Not Available,1.82,Not Available
-1979 June,1.17,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,1.84,Not Available
+1979 June,1.17,Not Available,2.98,Not Available,2.73,Not Available,1.99,Not Available,Not Available,1.84,Not Available
 1979 July,1.2,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,1.84,Not Available
 1979 August,1.24,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,1.87,Not Available
 1979 September,1.24,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,1.89,Not Available
@@ -51,9 +51,9 @@
 1980 January,1.37,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,2,Not Available
 1980 February,1.42,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,2.1,Not Available
 1980 March,1.46,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,2.13,Not Available
-1980 April,1.51,Not Available,3.68,Not Available,3.39,Not Available,2.56,Not Available,Not Available,2.09,Not Available
+1980 April,1.51,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,2.09,Not Available
 1980 May,1.56,Not Available,3.68,Not Available,3.39,Not Available,2.56,Not Available,Not Available,2.17,Not Available
-1980 June,1.57,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,2.15,Not Available
+1980 June,1.57,Not Available,3.68,Not Available,3.39,Not Available,2.56,Not Available,Not Available,2.15,Not Available
 1980 July,1.64,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,2.36,Not Available
 1980 August,1.64,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,2.45,Not Available
 1980 September,1.69,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,2.45,Not Available
@@ -63,9 +63,9 @@
 1981 January,1.77,Not Available,3.94,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,2.51,Not Available
 1981 February,1.81,Not Available,3.99,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,2.67,Not Available
 1981 March,1.86,Not Available,4.06,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,2.71,Not Available
-1981 April,1.93,Not Available,4.11,Not Available,4,Not Available,3.14,Not Available,Not Available,2.81,Not Available
+1981 April,1.93,Not Available,4.11,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,2.81,Not Available
 1981 May,1.95,Not Available,4.29,Not Available,4,Not Available,3.14,Not Available,Not Available,2.92,Not Available
-1981 June,1.95,Not Available,4.3,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,2.95,Not Available
+1981 June,1.95,Not Available,4.3,Not Available,4,Not Available,3.14,Not Available,Not Available,2.95,Not Available
 1981 July,2.01,Not Available,4.32,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,2.97,Not Available
 1981 August,2.02,Not Available,4.3,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,2.99,Not Available
 1981 September,2.08,Not Available,4.47,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,2.95,Not Available
@@ -75,9 +75,9 @@
 1982 January,2.23,Not Available,4.65,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,3.07,Not Available
 1982 February,2.3,Not Available,4.69,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,3.18,Not Available
 1982 March,2.35,Not Available,4.78,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,3.25,Not Available
-1982 April,2.4,Not Available,4.86,Not Available,4.82,Not Available,3.87,Not Available,Not Available,3.32,Not Available
+1982 April,2.4,Not Available,4.86,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,3.32,Not Available
 1982 May,2.45,Not Available,5.17,Not Available,4.82,Not Available,3.87,Not Available,Not Available,3.42,Not Available
-1982 June,2.45,Not Available,5.2,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,3.57,Not Available
+1982 June,2.45,Not Available,5.2,Not Available,4.82,Not Available,3.87,Not Available,Not Available,3.57,Not Available
 1982 July,2.47,Not Available,5.23,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,3.69,Not Available
 1982 August,2.53,Not Available,5.23,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,3.67,Not Available
 1982 September,2.56,Not Available,5.41,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,3.67,Not Available
@@ -87,9 +87,9 @@
 1983 January,2.66,Not Available,5.86,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,3.57,Not Available
 1983 February,2.66,Not Available,5.87,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,3.41,Not Available
 1983 March,2.58,Not Available,6,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,3.45,Not Available
-1983 April,2.53,Not Available,6.06,Not Available,5.59,Not Available,4.18,Not Available,Not Available,3.35,Not Available
+1983 April,2.53,Not Available,6.06,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,3.35,Not Available
 1983 May,2.53,Not Available,6.22,Not Available,5.59,Not Available,4.18,Not Available,Not Available,3.55,Not Available
-1983 June,2.59,Not Available,6.2,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,3.58,Not Available
+1983 June,2.59,Not Available,6.2,Not Available,5.59,Not Available,4.18,Not Available,Not Available,3.58,Not Available
 1983 July,2.52,Not Available,6.21,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,3.72,Not Available
 1983 August,2.58,Not Available,6.18,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,3.75,Not Available
 1983 September,2.67,Not Available,6.19,Not Available,Not Available,Not Available,Not Available,Not Available,Not Available,3.7,Not Available
@@ -542,13 +542,18 @@
 2020 December,Not Available,3.57,9.75,96.8,7.39,69.6,4.1,13.8,Not Available,3.3,96
 2021 January,Not Available,3.46,9.68,96.7,7.41,70.3,4.07,13.4,Not Available,3.33,90.7
 2021 February,Not Available,12.45,9.31,96.7,7.35,70.2,9.33,12.7,Not Available,16.29,88.4
-2021 March,Not Available,4.04,10.51,96.4,7.99,67.9,4.4,13.8,Not Available,3.4,89
-2021 April,Not Available,3.84,12.25,96.3,8.4,64.9,4,13.5,Not Available,3.14,88.7
-2021 May,Not Available,4.34,14.13,96.1,8.96,60.3,4.12,13.3,Not Available,3.35,89.4
-2021 June,Not Available,4.88,17.73,96.1,9.58,57.1,4.15,13,Not Available,3.57,88.1
-2021 July,Not Available,5.6,19.94,96.6,9.88,55.4,4.73,12.9,Not Available,4.12,86.7
-2021 August,Not Available,5.67,20.98,96.5,10.19,54.7,5.01,13,Not Available,4.45,86.3
-2021 September,Not Available,6.25,20.25,96.6,10.28,56.4,5.57,13.7,Not Available,5.09,87.9
-2021 October,Not Available,6.41,17.5,97.1,10.45,59.5,6.84,13.4,Not Available,5.75,87.8
-2021 November,Not Available,6.03,13.29,97,10.11,65.5,7.03,13.7,Not Available,5.89,87.2
-2021 December,Not Available,5.81,13.13,96.7,10.33,68.3,6.74,14,Not Available,5.15,88.7
+2021 March,Not Available,4.04,10.51,96.4,7.99,67.9,4.41,13.8,Not Available,3.4,89
+2021 April,Not Available,3.85,12.25,96.3,8.4,64.8,4,13.5,Not Available,3.14,88.7
+2021 May,Not Available,4.35,14.13,96.1,8.96,60.2,4.12,13.3,Not Available,3.35,89.4
+2021 June,Not Available,4.89,17.73,96.1,9.57,57.2,4.15,13,Not Available,3.57,88.1
+2021 July,Not Available,5.61,19.94,96.6,9.89,55.4,4.75,12.9,Not Available,4.12,86.7
+2021 August,Not Available,5.67,20.99,96.5,10.19,54.9,5.01,13,Not Available,4.45,86.3
+2021 September,Not Available,6.24,20.24,96.6,10.27,56.5,5.57,13.7,Not Available,5.09,87.9
+2021 October,Not Available,6.41,17.49,97.1,10.45,59.5,6.83,13.4,Not Available,5.75,87.8
+2021 November,Not Available,6.04,13.3,97,10.1,65.4,7.03,13.7,Not Available,5.89,87.2
+2021 December,Not Available,5.82,13.12,96.7,10.34,68.4,6.74,14,Not Available,5.15,88.7
+2022 January,Not Available,5.33,12.04,96.9,9.76,71.3,6.65,13.3,Not Available,6.15,87.2
+2022 February,Not Available,5.78,12.17,96.7,10.04,70.1,7.53,14.1,Not Available,6.26,88.5
+2022 March,Not Available,5.59,12.98,96.6,10.25,68.4,6.32,14.2,Not Available,5.32,89.5
+2022 April,Not Available,6.34,13.65,96.4,10.48,65.7,6.81,14.1,Not Available,6.45,88.3
+2022 May,Not Available,8.41,17.55,96.2,12.04,60.9,8.31,13.4,Not Available,7.77,88.8

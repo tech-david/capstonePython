@@ -12,11 +12,11 @@ class MyTestCase(unittest.TestCase):
         test_size = len(x_test)
         total_size = len(df)
         self.assertEqual(test_size,
-                         24,
-                         "Test size should be 24 periods")
+                         36,
+                         "Test size should be 36 periods")
         self.assertEqual(total_size,
-                         train_size + 24,
-                         "Adding 24 to training should equal total data")
+                         train_size + 36,
+                         "Adding 36 to training should equal total data")
 
 
 if __name__ == '__main__':

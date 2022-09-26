@@ -18,6 +18,7 @@
 ## Instructions
 > Application connects to AWS S3 bucket, access and secret keys are needed
 - For security reasons, the keys are set as environment variables and not included in code base
+- Code can be refactored to read data from the *data* directory
 > Once cloned, enter the following command on Powershell/Command line (depending on OS) to run locally 
 - `streamlit run Home.py`
 

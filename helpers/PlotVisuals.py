@@ -73,11 +73,11 @@ def oil_raw_plot():
 def house_raw_plot():
     df = get_raw_house_data()
     fig = go.Figure()
-    fig.add_trace(go.Scatter(x=df['observation_date'],
+    fig.add_trace(go.Scatter(x=df['DATE'],
                              y=df["Average Sales Price"],
                              fill='tonexty',
                              name='Average Sales Price'))
-    fig.add_trace(go.Scatter(x=df['observation_date'],
+    fig.add_trace(go.Scatter(x=df['DATE'],
                              y=df["Median Sales Price"],
                              fill='tozeroy',
                              name='Median Sales Price'))
