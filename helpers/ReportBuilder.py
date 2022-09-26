@@ -222,6 +222,7 @@ def create_features_profile():
 def create_model_data_profile():
     df = get_best()
     feature_profile = ProfileReport(df,
+                                    minimal=True,
                                     title="Model ready data",
                                     dataset={
                                         "description": "Data after feature prices changes have been calculated,"
